@@ -1,7 +1,8 @@
 /**********************************************************************
  *
- * This code is part of the MRcore projec
- * Author:  Alberto Valero
+ * This code is part of the MRcore project
+ * Author:  Rodrigo Azofra Barrio & Miguel Hernando Gutierrez
+ * 
  *
  * MRcore is licenced under the Common Creative License,
  * Attribution-NonCommercial-ShareAlike 3.0
@@ -24,57 +25,54 @@
  * restricts the author's moral rights.
  *
  * It is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied
+ * but WITHOUT ANY WARRANTY; without even the implied 
  * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
- * PURPOSE.
+ * PURPOSE.  
  **********************************************************************/
- 
-#include "path2d.h"
 
-#include "gl/gltools.h"
+#ifndef __ARM_H_
+#define __ARM_H_
 
-namespace mr{
-	
-IMPLEMENT_MR_OBJECT(Path2D)
+#include "mrcore.h"
 
-ostream& operator << (ostream& os,const Path2D& path){
-	os<<path.points.size()<<" ";
-	for (unsigned int i=0;i<path.points.size();i++){
-		os<<" "<<path.points[i].x<<" "<<path.points[i].y;
+namespace mr
+{
+
+class Arm : public ComposedEntity , public DataSource
+{
+	DECLARE_MR_OBJECT(Arm)
+
+public:
+	//Serializers
+	virtual void writeToStream(Stream& stream){}
+	virtual void readFromStream(Stream& stream){}
+
+	//Constructor
+	Arm(void);
+	Arm(double _long, Vector3D pos);
+
+	//expose the saving to log file service
+	bool saveDataTo(DataLogOut* log, string name)
+	{
+		return saveDataTo(log,name);
 	}
-	os << endl;
-	return os;
-}
 
-void Path2D::writeToStream(Stream& stream){
-	int size=points.size();
-	stream<<size;
-	for (unsigned int i=0;i<points.size();i++){
-		stream<<points[i].x<<points[i].y;
-	}
-}
+	virtual int Home(){return 1;}
+	virtual int SetAccel(double acc_pan, double acc_tilt){return 1;}
+	virtual int SetSpeed(double vel_pan, double vel_tilt){return 1;}
+	virtual int Move(double pos_pan, double pos_tilt){return 1;}
 
-void Path2D::readFromStream(Stream& is){
-	points.clear();
-	int size; is >> size;
-	points.resize(size);
-	for (int i=0;i<size;i++){
-		double x; is >> x;
-		double y; is >> y;
-		points[i]=Vector2D(x,y);
-	}
-}
+protected:
 
-void Path2D::drawGL(){
-	
-	glColor3ub(r,g,b);
-	
-	glBegin(GL_LINE_STRIP);
-	for (unsigned int i=0; i<points.size(); i++){
-		glVertex2d(points[i].x,points[i].y);
-	}
-	glEnd();
-}
+	Tcp *tcp;
+	SimpleJoint *joint;
+	double longitud;
 
+private:
+	CylindricalPart *arm;
 
-}//end namespace
+};
+
+};//end namespace mr
+
+#endif

@@ -1,8 +1,4 @@
-IF(BIICODE)
-	include(${CMAKE_HOME_DIRECTORY}/biicode.cmake)
-	INIT_BIICODE_BLOCK()
-ENDIF()
-
+cmake_minimum_required(VERSION 3.0)
 MESSAGE(STATUS "MRCORE: Checking time functions")
 IF(NOT WIN32)
 	check_function_exists(gettimeofday HAVE_GETTIMEOFDAY)
@@ -16,7 +12,7 @@ IF(NOT WIN32)
 ENDIF()
 
 SET(curdir ${CMAKE_CURRENT_SOURCE_DIR}/src)
-#INCLUDE_DIRECTORIES(${curdir}/include) 
+INCLUDE_DIRECTORIES(${curdir}/include) 
 
 
 ####################################################################################################
@@ -68,14 +64,10 @@ ELSE()
 	
 	FILE(GLOB files "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h")
 	INSTALL(FILES ${files} DESTINATION include)
-	
-	FILE(GLOB children RELATIVE ${curdir} ${curdir}/*)
-	FOREACH(child ${children})
-		IF(IS_DIRECTORY ${curdir}/${child})
-			FILE(GLOB_RECURSE child_headers ${curdir}/${child}/*.h)
-			INSTALL(FILES ${child_headers} DESTINATION include/${child})
-		ENDIF()
-	ENDFOREACH()
+	INSTALL(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src/ DESTINATION include
+          FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp")
+		  
+
 	
 	MESSAGE(STATUS "mrcore lib will be installed on ${CMAKE_INSTALL_PREFIX}/lib")
 	
@@ -84,6 +76,12 @@ ENDIF()
 #LOCAL GENERATION OF HEADERS... only for develop
 option(CREATE_HEADERS "Create headers, automatically from dir tree.  " OFF)
 if(CREATE_HEADERS)
- message("Includes would be not correct if the block is not open")
+ message("headers update: ...")
  include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/update_headers.cmake)
 endif() 
+
+option(CREATE_EXAMPLES "Create example projects  " OFF)
+if(CREATE_EXAMPLES)
+ message("Examples Project Generation")
+ ADD_SUBDIRECTORY(examples)
+endif(CREATE_EXAMPLES ) 

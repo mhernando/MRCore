@@ -53,7 +53,7 @@ void RobotSim::writeToXMLasRobotSim(XMLElement* parent)
 void RobotSim::readFromXML(XMLElement* parent)
 {
 	ComposedEntity::readFromXML(parent);
-	int i,num=parent->GetChildrenNum();
+	int num=parent->GetChildrenNum();
 	int objSize=objects.size();
 	XMLElement** pObj=parent->GetChildren();
 	XMLfile file(parent);

@@ -149,13 +149,13 @@ void FaceSetPart::addFace(Face face)
 
 void FaceSetPart::modifyFace(int index,Face face)
 {
-	if ((0<=index)&&(index<faces.size()))
+	if ((0<=index)&&(index<(int)faces.size()))
 	{
 		faces.erase(faces.begin()+index);
 		absolutefaces.erase(absolutefaces.begin()+index);
 		faces.insert(faces.begin()+index,face);
 		box.reset();
-		for (int i=0;i<faces.size();i++) 
+		for (int i=0;i<(int)faces.size();i++) 
 		{
 			for(int j=0;j<faces[i].getNumVertex();j++)
 			{

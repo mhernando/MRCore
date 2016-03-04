@@ -66,7 +66,7 @@ void QuadrotorSim::simulate(double t)
 	{
 		//simulate falling to groudn	
 		position.position.z+=velFalling*t-4.9*t*t;
-		velFalling-=9.8f*t;
+		velFalling-=(float)(9.8*t);
 		if(position.position.z<=0)
 			position.position.z=0;
 		setAbsoluteT3D(position);

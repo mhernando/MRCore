@@ -92,7 +92,7 @@ public:
 	Face* getFaceI(int num)
 	{
 		if(faces.size()>0)
-			if (0<=num<faces.size())
+			if ((0<=num)&&(num<(int)faces.size()))
 				return &faces[num];
 	}
 
@@ -100,7 +100,7 @@ public:
 	//This function doesn´t involve any mathematical calculation
 	Face* getAbsoluteFaceI(int num){
 		if(faces.size()>0)
-			if (0<=num<faces.size())
+			if ((0<=num)&&(num<(int)faces.size()))
 				return &absolutefaces[num];
 	}
 

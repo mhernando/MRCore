@@ -128,9 +128,9 @@ void UniformSampler::initializeL()
 			for(int k=0;k<n;k++){
 				int val=0;
 				
-				if(n==2)val=L_2[i][k];
-				else if(n==3)val=L_3[i][k];
-				else if(n==6)val=L_6[i][k];
+				if(n==2)val=(int)L_2[i][k];
+				else if(n==3)val=(int)L_3[i][k];
+				else if(n==6)val=(int)L_6[i][k];
 				else for(int l=0;l<n;l++)val+=T[k][l]*aux[l];
 
 				L[i][k]=0.5*(val%2);
