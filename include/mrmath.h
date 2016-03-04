@@ -1,0 +1,20 @@
+#ifndef __MRmath_H__
+#define __MRmath_H__
+#include "math/angle.h"
+#include "math/boundingbox.h"
+#include "math/face.h"
+#include "math/gaussian.h"
+#include "math/geometryfunctions.h"
+#include "math/interactions.h"
+#include "math/matrix3x3.h"
+#include "math/mrmath.h"
+#include "math/orientationmatrix.h"
+#include "math/plane.h"
+#include "math/segment2d.h"
+#include "math/segment3d.h"
+#include "math/transformation2d.h"
+#include "math/transformation3d.h"
+#include "math/trianglemesh.h"
+#include "math/vector2d.h"
+#include "math/vector3d.h"
+#endif // __MRmath_H__

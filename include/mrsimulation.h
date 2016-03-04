@@ -1,0 +1,23 @@
+#ifndef __MRsimulation_H__
+#define __MRsimulation_H__
+#include "simulation/adeptonesim.h"
+#include "simulation/aseairb2000sim.h"
+#include "simulation/camerasim.h"
+#include "simulation/euitibotsim.h"
+#include "simulation/kinectsim.h"
+#include "simulation/lasersensor3dsim.h"
+#include "simulation/lasersensorsim.h"
+#include "simulation/lms100sim.h"
+#include "simulation/lms200sim.h"
+#include "simulation/mobilerobot.h"
+#include "simulation/nemolasersensor3dsim.h"
+#include "simulation/patrolbotsim.h"
+#include "simulation/personsim.h"
+#include "simulation/pioneer3atsim.h"
+#include "simulation/powercube70sim.h"
+#include "simulation/puma560sim.h"
+#include "simulation/quadrotorsim.h"
+#include "simulation/simulator.h"
+#include "simulation/voicettssim.h"
+#include "simulation/wheeledbasesim.h"
+#endif // __MRsimulation_H__

@@ -1,0 +1,26 @@
+bin/*
+lib/*
+doc/*
+
+# Compiled source #
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.obj
+*.pyc
+*.dir
+
+# Editor backups
+*~
+
+# Hidden files
+
+*/.*
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+.DS_STORE

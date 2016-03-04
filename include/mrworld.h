@@ -1,0 +1,21 @@
+#ifndef __MRworld_H__
+#define __MRworld_H__
+#include "world/actuator.h"
+#include "world/composedentity.h"
+#include "world/cylindricalpart.h"
+#include "world/entityset.h"
+#include "world/facesetpart.h"
+#include "world/joint.h"
+#include "world/material.h"
+#include "world/meshpart.h"
+#include "world/positionableentity.h"
+#include "world/primitivesolidentity.h"
+#include "world/prismaticpart.h"
+#include "world/referencesystem.h"
+#include "world/robotsim.h"
+#include "world/simplejoint.h"
+#include "world/solidentity.h"
+#include "world/spherepart.h"
+#include "world/tcp.h"
+#include "world/world.h"
+#endif // __MRworld_H__

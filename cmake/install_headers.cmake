@@ -1,0 +1,25 @@
+SET(curdir2 ${CMAKE_CURRENT_SOURCE_DIR}/src)
+MESSAGE( "The source directory to extract headers is:" ${curdir2})
+
+FILE(GLOB children RELATIVE ${curdir2} ${curdir2}/*)
+SET(HEADERS "")
+SET(HEADERS_HPP "")
+FOREACH(child ${children})
+IF(IS_DIRECTORY ${curdir2}/${child})
+    FILE(GLOB_RECURSE child_headers ${curdir2}/${child}/*.h)
+    FILE(GLOB_RECURSE child_headers_hpp ${curdir2}/${child}/*.hpp)
+	SET(HEADERS ${HEADERS} ${child_headers})
+	SET(HEADERS_HPP ${HEADERS_HPP} ${child_headers_hpp})
+ENDIF()
+ENDFOREACH()
+
+SET(ALL_HEADERS ${HEADERS} ${HEADERS_HPP})
+
+FOREACH(header ${ALL_HEADERS})
+	FILE(COPY ${header} DESTINATION ${CMAKE_INSTALL_PREFIX}/include/mrcore)
+ENDFOREACH()
+
+FILE(GLOB children RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_SOURCE_DIR}/include/*.h)
+FOREACH(header ${children})
+	FILE(COPY ${CMAKE_CURRENT_SOURCE_DIR}/include/${header} DESTINATION ${CMAKE_INSTALL_PREFIX}/include/mrcore)
+ENDFOREACH()
