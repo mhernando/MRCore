@@ -54,7 +54,7 @@ int main(int argc, char* argv[])
 	vector<double> datos;
 	for(int i=0;i<181;i++)
 		datos.push_back(8);
-	laser.setData(datos,-90,1);
+	//laser.setData(datos,-90,1);
 
 	/*planes.push_back(Plane(Vector3D(5,0,2),Vector3D(1,0,0)));
 	planes.push_back(Plane(Vector3D(-5,0,2),Vector3D(1,0,0)));
@@ -70,8 +70,8 @@ int main(int argc, char* argv[])
 	
 //Adding objects to scene
 	scene.addObject(&laser);
-	for(int i=0;i<(int)(planes.size());i++)
-		scene.addObject(&planes[i]);
+	/*for(int i=0;i<(int)(planes.size());i++)
+		scene.addObject(&planes[i]);*/
 	for(int i=0;i<(int)(segments.size());i++)
 		scene.addObject(&segments[i]);
 

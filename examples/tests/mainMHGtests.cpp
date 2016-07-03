@@ -1,5 +1,5 @@
-#include "../core/vector3d.h"
-#include "../core/orientationmatrix.h"
+#include "mrcore.h"
+
 #include <iostream>
 using namespace std;
 void main()
@@ -30,7 +30,7 @@ void main()
 	m5=m6;
 	cout<<m5<<endl;
 	double r,p,y;
-	m5.getRotationRPY(r,p,y);
+	m5.getRPY(r,p,y);
 	cout<<0.78<<" "<<r<<std::endl;
 	cout<<0.4<<" "<<p<<std::endl;
 	cout<<0.2<<" "<<y<<std::endl;

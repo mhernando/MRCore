@@ -1,6 +1,5 @@
-#include "mrcore/mrcore.h"
+#include "mrcore.h"
 
-#include "localizer.h"
 #include <iostream>
 #include "glutapp.h"
 

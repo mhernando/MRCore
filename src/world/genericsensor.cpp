@@ -1,7 +1,8 @@
 /**********************************************************************
  *
- * This code is part of the MRcore projec
- * Author:  the MRCore group
+ * This code is part of the MRcore project
+ * Author:  Miguel Hernando Gutierrez
+ * 
  *
  * MRcore is licenced under the Common Creative License,
  * Attribution-NonCommercial-ShareAlike 3.0
@@ -29,41 +30,44 @@
  * PURPOSE.  
  **********************************************************************/
 
-#ifndef __SIMULATOR_INCLUDED_H_
-#define __SIMULATOR_INCLUDED_H_
+#include "genericsensor.h"
+#include "world.h"
+namespace mr{
 
-
-
-#include <vector>
-#include "net/server.h"
-#include "world/world.h"
-#include "mobilerobot.h"
-using namespace std;
-
-namespace mr
+GenericSensor::GenericSensor(void)
 {
-
-//A mobile robot class represents a terrestial mobile base plus several sensors that
-///can be attached to it, as lasers, laser3d, etc.
-
-class Simulator
+	period=0;
+}
+void GenericSensor::setFrecuency(double hertzs)
 {
-public:
-	Simulator(){;}
-	virtual ~Simulator();
-	World* getWorld(){return &world;}//for painting
+	if(hertzs==0)period=0;
+	else{
+		period=1/hertzs;
+	}
+}
 
-	bool load(string environment);
-	MobileRobot* getRobot(int index){return robots[index];}
-	int numRobots(){return robots.size();}
-protected:
-	vector<Server*> servers;
-	vector<MobileRobot*> robots;
-	World world;
-};
+GenericSensor::~GenericSensor(void)
+{
+}
 
-
-}; //end namespace mr
-
-
-#endif
+void GenericSensor::simulate(double t)
+{
+	//check if last update was done a period time previous to period
+	//if no world is attached, always update
+	ComposedEntity::simulate(t);
+	World *w=getWorld();
+	if(w){
+		TimeSim ct=w->getCurrentTime();
+		if((double)(ct-lastUpdate)<period)return;
+		
+	}
+	m.Lock();
+	updateSensorData();
+	m.Unlock();
+	if(w)lastUpdate=w->getCurrentTime();
+}
+//retrieving the specific sensor data should do something like
+//	m.Lock();
+//	d=data;
+//	m.Unlock();
+}

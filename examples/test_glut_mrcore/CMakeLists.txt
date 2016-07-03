@@ -1,16 +1,5 @@
-
-SET(GLUT_FOUND 1)
-SET(GLUT_LIBRARIES glut32)
-SET(OPENGL_LIBRARIES opengl32 glu32 )
-
-		ADD_EXECUTABLE(primerEntornoGlut primerentornoglut.cpp)
-		TARGET_INCLUDE_DIRECTORIES(primerEntornoGlut PUBLIC ${MRCORE_DIR}/include)
-		IF(WIN32)
-
-			TARGET_LINK_LIBRARIES(primerEntornoGlut mrcore_d  ${GLUT_LIBRARIES})
-		ELSE(WIN32) #LINUX	
-			TARGET_LINK_LIBRARIES(primerEntornoGlut mrcore ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES} )
-		ENDIF(WIN32)
+ADD_EXECUTABLE(primerEntornoGlut primerentornoglut.cpp)
+MR_GLUT_EXAMPLE(primerEntornoGlut)
 		
 
 

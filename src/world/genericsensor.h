@@ -1,7 +1,7 @@
 /**********************************************************************
  *
  * This code is part of the MRcore project
- * Author:  Rodrigo Azofra Barrio & Miguel Hernando Gutierrez
+ * Author:  Rodrigo Azofra Barrio &Miguel Hernando Gutierrez
  * 
  *
  * MRcore is licenced under the Common Creative License,
@@ -30,64 +30,36 @@
  * PURPOSE.  
  **********************************************************************/
 
-#ifndef __MRCORE__WORLD__H
-#define __MRCORE__WORLD__H
-
-#include <iostream>
-
-#include "../base/object.h"
-
-#include "../math/transformation3d.h"
-#include "positionableentity.h"
-#include "entityset.h"
+#pragma once
+#include "composedentity.h"
 #include "timesim.h"
+#include "../system/mutex.h"
 using namespace std;
+
 namespace mr
 {
 /*!
-    \class World
-    The class world is a container for phisical objects. All the contained objects have to be 
-	positionable entities.
+    \class GenericSensor
+    GenericSensor	->	An abstract class for sensors (second generation). It is responsible of the correct update
+	of the sensor, and should include frecuency info. Although many sensors do not include a solid representation
+	due to the ComposedEntity heritage this is directly allowed.
+	The Sensor has as "linkedTo" the component required for its sensing. i.e.: a joint encoder should be linked to the
+	sensed joint. A set of movile platform encoders should be linked to the wheeledBase...and so on. 
 */
-
-class World: public EntitySet
+class GenericSensor :public ComposedEntity
 {
-	DECLARE_MR_OBJECT(World)
-
-	/**Text output**/
-	friend ostream& operator<<(ostream& os, const World& w);
-	//attributes
-	//non persistent data
-	TimeSim virtualTime;
+	TimeSim lastUpdate;
+	double period;
+protected: 
+	Mutex m;
+	//Construction/destruction
+	GenericSensor(void);
+	virtual ~GenericSensor(void);
+	//methods
+	void setFrecuency(double hertzs=0);
+	virtual void updateSensorData()=0; //it is executed only if frec condition is satisficed
 public:
-
-//constructors
-	World(void);
-	virtual ~World(void);
-	TimeSim getCurrentTime(){return virtualTime;}
-	void resetTime(){virtualTime.reset();}
-
-
-//methods
-	//serialization
-	virtual void writeToStream(Stream& stream);
-	virtual void readFromStream(Stream& stream);
-	virtual void writeToXML(XMLElement* parent);
-	virtual void readFromXML(XMLElement* parent);
-	virtual char* CreateXMLText();
-	virtual void loadFromXMLText(char* XmlText);
-	//Draw the world 
-	//void drawGL();
-	//Collision checking
-	bool checkCollisionWith(SolidEntity &solid);
-	//retrieves/computes the world bounding box
-	BoundingBox getBoundingBox();
-	//Simulates simulable objects contained into the set
 	void simulate(double t);
-
-
-
 };
 
-};
-#endif  //__MRCORE__WORLD__H
+}//mr

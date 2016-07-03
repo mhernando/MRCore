@@ -2,12 +2,12 @@
 //
 
 
-#include "mrcore/mrcore.h"
+#include "mrcore.h"
 
 #include "GL/glut.h"
 
 #include <iostream>
-#include "objects.h"
+
 
 
 using namespace mr;
@@ -134,16 +134,16 @@ void OnKeyboardDown(unsigned char key, int x, int y)
 		myfile.write(&world);
 		}
 	if(key=='o'){
-		manipulator->getJoint(0)->setTarget(0.5);
+		/*manipulator->getJoint(0)->setTarget(0.5);
 		manipulator->getJoint(0)->setSpeed(0.4);
 		manipulator->getJoint(1)->setTarget(0.5);
-		manipulator->getJoint(1)->setSpeed(0.4);
+		manipulator->getJoint(1)->setSpeed(0.4);*/
 	}
 	if(key=='p'){
-		manipulator->getJoint(0)->setTarget(2.5);
+		/*manipulator->getJoint(0)->setTarget(2.5);
 		manipulator->getJoint(0)->setSpeed(0.4);
 		manipulator->getJoint(1)->setTarget(2.5);
-		manipulator->getJoint(1)->setSpeed(0.4);
+		manipulator->getJoint(1)->setSpeed(0.4);*/
 	}
 	
 	myrobot->move(speed,rotspeed);
@@ -284,9 +284,9 @@ void InitWorld1()
 //it works!!!
 
 //probando el mesh
-	MeshPart *tmesh=createWoodBench();
+	/*MeshPart *tmesh=createWoodBench();
 	tmesh->setRelativePosition(Vector3D(12,2,0));
-	world+=tmesh;	
+	world+=tmesh;	*/
 	
 //probando el robot
 	myrobot=new Pioneer3ATSim;

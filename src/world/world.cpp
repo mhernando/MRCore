@@ -70,7 +70,7 @@ void World::loadFromXMLText(char* XmlText)
 	EntitySet::loadFromXMLText(XmlText);
 }
 
-World::World(void)
+World::World(void):virtualTime()
 {
 }
 
@@ -93,9 +93,11 @@ bool World::checkCollisionWith(SolidEntity &solid)
 
 void World::simulate(double t)
 {
+virtualTime+=t; //update the world virtualTime
 for(int i=0;i<(int)(objects.size());i++)
 	objects[i]->simulate(t);
 }
+
 BoundingBox World::getBoundingBox()
 {
 	BoundingBox nbox;

@@ -5,6 +5,7 @@
 #include "world/cylindricalpart.h"
 #include "world/entityset.h"
 #include "world/facesetpart.h"
+#include "world/genericsensor.h"
 #include "world/joint.h"
 #include "world/material.h"
 #include "world/meshpart.h"
@@ -17,5 +18,6 @@
 #include "world/solidentity.h"
 #include "world/spherepart.h"
 #include "world/tcp.h"
+#include "world/timesim.h"
 #include "world/world.h"
 #endif // __MRworld_H__
