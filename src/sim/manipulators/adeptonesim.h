@@ -1,7 +1,8 @@
 /**********************************************************************
  *
  * This code is part of the MRcore project
- * Author:  -----------anyone
+ * Author:  Rodrigo Azofra Barrio & Miguel Hernando Gutierrez
+ * 
  *
  * MRcore is licenced under the Common Creative License,
  * Attribution-NonCommercial-ShareAlike 3.0
@@ -28,52 +29,54 @@
  * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
  * PURPOSE.  
  **********************************************************************/
-#include "../data/laserdata.h"
-#include "../data/laserdata3d.h"
-#include "../data/odometry.h"
-#include "../data/pointcloud.h"
-#include "../data/image.h"
-#include "../sim/rovers/patrolbotsim.h"
-#include "../sim/rovers/pioneer3atsim.h"
-#include "../sim/sensors/lms200sim.h"
-#include "../sim/facesetpart.h"
-#include "../sim/sensors/lasersensor3dsim.h"
-#include "../sim/rovers/nemolasersensor3dsim.h"
-#include "../sim/miscelaneous/powercube70sim.h"
-#include "../sim/manipulators/adeptonesim.h"
-#include "../sim/sensors/lms100sim.h"
-#include "../sim/spherepart.h"
-#include "../sim/manipulators/puma560sim.h"
-#include "../sim/manipulators/aseairb2000sim.h"
-#include "../sim/miscelaneous/quadrotorsim.h"
-#include "../sim/manipulators/euitibotsim.h"
-#include "../sim/world.h"
+
+#ifndef __SCARA_ADEPT_ONE_SIM_H_
+#define __SCARA_ADEPT_ONE_SIM_H_
+
+
+
+
+#include "robotsim.h"
+
+#define ELBOW_LEFT 0x81 //0x1000-0001	-	-1
+#define ELBOW_RIGHT 0x80//0x1000-0000	-	1
 
 namespace mr
 {
-void mrcoreInit()
+
+class AdeptOneSim : public RobotSim
 {
-	LaserData laser;
-	Odometry odom;
-	PointCloud cloud;
-	PatrolbotSim patrol;
-	LMS200Sim lasersim;
-	LMS100Sim lasersim2;
-	FaceSetPart part;
-	Pioneer3ATSim pi;
-	LaserData3D laserdata3d;
-	LaserSensor3DSim laser3dsim;
-	PowerCube70Sim powercube;
-	NemoLaserSensor3DSim nemolaser3d;
-	AdeptOneSim adeptOne;
-	Image imag;
-	SpherePart sphere;
-	Puma560Sim puma;
-	QuadrotorSim quad;
-	AseaIRB2000Sim asea;
-	EUITIbotSim ebot;
-	World world;
+	DECLARE_MR_OBJECT(AdeptOneSim)
+
+public:
+	//Serializers
+	virtual void writeToStream(Stream& stream);
+	virtual void readFromStream(Stream& stream);
+	virtual void writeToXML(XMLElement* parent);
+	virtual void readFromXML(XMLElement* parent);
+	virtual char* CreateXMLText();
+	virtual void loadFromXMLText(char* XmlText);
+
+	//Constructor
+	AdeptOneSim(void);
+
+//Return elbow configuration
+	
+	virtual bool getConfigurationOf(const vector<double> &_q, unsigned char &conf);
 
 
-} //mr
+//Forward and inverse SCARA_ADEPT_ONE kinematics Relative
+	virtual bool inverseKinematics(Transformation3D t, vector<double> &_q, unsigned char conf=0);//Not move robot
+
+//simulation method
+	//void  simulate(double delta_t);
+
+protected:
+//Specific inverse methode of SCARA_ADEPT_ONE
+	bool ADEPTONEinverseKinematics(double yaw,Vector3D p,vector<double> &_q,unsigned char conf=0);
+
 };
+
+};//end namespace mr
+
+#endif

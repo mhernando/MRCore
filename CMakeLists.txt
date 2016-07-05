@@ -1,4 +1,8 @@
 cmake_minimum_required(VERSION 3.0)
+project (MRCore )
+set (MRCore_VERSION_MAJOR 2)
+set (MRCore_VERSION_MINOR 0)
+ 
 MESSAGE(STATUS "MRCORE: Checking time functions")
 IF(NOT WIN32)
 	check_function_exists(gettimeofday HAVE_GETTIMEOFDAY)

@@ -2,7 +2,7 @@
 #include "glscene2d.h"
 #include "../math/mrmath.h"
 #include "../base/streamfile.h"
-#include "../world/world.h"
+#include "../sim/world.h"
 #include <math.h>
 #include <fstream>
 #include <iostream>
