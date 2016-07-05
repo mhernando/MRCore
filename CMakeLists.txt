@@ -32,54 +32,42 @@ ENDIF()
 ENDFOREACH()
 
 
-IF(BIICODE)
-	ADD_BIICODE_TARGETS()
-	target_include_directories(${BII_LIB_TARGET} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+# MR target library
+IF (WIN32)	
+	ADD_LIBRARY(mrcore STATIC ${SOURCES} ${HEADERS} )
+	SET_TARGET_PROPERTIES(mrcore PROPERTIES DEBUG_POSTFIX "_d")
+ELSE(WIN32)
+	ADD_LIBRARY(mrcore SHARED ${SOURCES})
+	TARGET_LINK_LIBRARIES(mrcore ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES} ${JPEG_LIBRARIES}  rt)
+ENDIF(WIN32)
+target_include_directories(mrcore PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 	
-	IF(HAVE_GETTIMEOFDAY)
-		target_compile_definitions(${BII_LIB_TARGET} PUBLIC -DHAVE_GETTIMEOFDAY)
-	ENDIF()
-	IF(HAVE_CLOCK_GETTIME)
-		target_compile_definitions(${BII_LIB_TARGET} PUBLIC -DHAVE_CLOCK_GETTIME)
-	ENDIF()
-ELSE()
-	# MR library
-	IF (WIN32)	
-		ADD_LIBRARY(mrcore STATIC ${SOURCES} ${HEADERS} )
-		SET_TARGET_PROPERTIES(mrcore PROPERTIES DEBUG_POSTFIX "_d")
-	ELSE(WIN32)
-		ADD_LIBRARY(mrcore SHARED ${SOURCES})
-		TARGET_LINK_LIBRARIES(mrcore ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES} ${JPEG_LIBRARIES}  rt)
-	ENDIF(WIN32)
-	target_include_directories(mrcore PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-	
-	########### To define a default install directory in Windows
-	IF (WIN32)
-		SET(CMAKE_INSTALL_PREFIX "C:/mrcore" CACHE PATH "FOO install prefix" FORCE)
-	ELSE(WIN32)
-		SET(CMAKE_INSTALL_PREFIX /usr/local/mrcore) 
-	ENDIF(WIN32)
-	MESSAGE(STATUS "Default install directory is: " ${CMAKE_INSTALL_PREFIX}) 
-	INSTALL(TARGETS mrcore DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
-	
-	FILE(GLOB files "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h")
-	INSTALL(FILES ${files} DESTINATION include)
-	INSTALL(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src/ DESTINATION include
+########### To define a default install directory in Windows
+IF (WIN32)
+	SET(CMAKE_INSTALL_PREFIX "C:/mrcore" CACHE PATH "FOO install prefix" FORCE)
+ELSE(WIN32)
+	SET(CMAKE_INSTALL_PREFIX /usr/local/mrcore) 
+ENDIF(WIN32)
+MESSAGE(STATUS "Default install directory is: " ${CMAKE_INSTALL_PREFIX}) 
+
+########### INSTALL PROJECT
+INSTALL(TARGETS mrcore DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
+FILE(GLOB files "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h")
+INSTALL(FILES ${files} DESTINATION include)
+INSTALL(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src/ DESTINATION include
           FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp")
 		  
-
+MESSAGE(STATUS "mrcore lib will be installed on ${CMAKE_INSTALL_PREFIX}/lib")
 	
-	MESSAGE(STATUS "mrcore lib will be installed on ${CMAKE_INSTALL_PREFIX}/lib")
-	
-ENDIF()
 
+#OPTIONS 
 #LOCAL GENERATION OF HEADERS... only for develop
 option(CREATE_HEADERS "Create headers, automatically from dir tree.  " OFF)
 if(CREATE_HEADERS)
  message("headers update: ...")
  include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/update_headers.cmake)
 endif() 
-
+#OPTION :GENERATE EXAMPLE PROJECTS
 option(CREATE_EXAMPLES "Create example projects  " OFF)
 if(CREATE_EXAMPLES)
  message("Examples Project Generation")

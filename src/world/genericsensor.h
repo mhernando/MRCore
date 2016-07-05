@@ -1,7 +1,7 @@
 /**********************************************************************
  *
  * This code is part of the MRcore project
- * Author:  Rodrigo Azofra Barrio &Miguel Hernando Gutierrez
+ * Author:  Miguel Hernando Gutierrez
  * 
  *
  * MRcore is licenced under the Common Creative License,
