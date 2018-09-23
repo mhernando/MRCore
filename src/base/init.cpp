@@ -47,6 +47,7 @@
 #include "../sim/manipulators/aseairb2000sim.h"
 #include "../sim/miscelaneous/quadrotorsim.h"
 #include "../sim/manipulators/euitibotsim.h"
+#include "../sim/sensors/ultrasonicsensor.h"
 #include "../sim/world.h"
 
 namespace mr
@@ -73,6 +74,7 @@ void mrcoreInit()
 	AseaIRB2000Sim asea;
 	EUITIbotSim ebot;
 	World world;
+	UltrasonicSensor usensor;
 
 
 } //mr

@@ -53,7 +53,7 @@ will have bearings from -PI/2 to + PI/2.
 The parametrization is the startAngle (-PI/2 in this case), the angular step (PI/180 in this example)
 and the number of measurements **/
 
-class LaserData :public Data
+class   LaserData :public Data
 {
 	///Text stream serializers for files and cout, cerr (std)
 	friend ostream& operator << (ostream& os,const LaserData& scan);

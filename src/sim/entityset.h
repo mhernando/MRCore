@@ -121,6 +121,7 @@ public:
 
 	//Retrieves a list of primitives whose bounding boxes are cut by a plane defined by a ref system
 	void getPrimitivesBoundingBoxesCutByPlane(const Transformation3D &t, vector<SolidEntity *> &subset, double range=-1);
+	void getPrimitivesCollidingBB(const BoundingBox &b, vector<SolidEntity *> &subset);
 protected:
 	//virtual method for linking objects to the base if the entityset is an object
 	virtual bool linkToBase(PositionableEntity *p){return true;}

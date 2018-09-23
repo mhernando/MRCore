@@ -541,4 +541,25 @@ void EntitySet::getPrimitivesBoundingBoxesCutByPlane(const Transformation3D &t, 
 		
 	}
 }
+void EntitySet::getPrimitivesCollidingBB(const BoundingBox &b, vector<SolidEntity *> &subset)
+{
+	for (int i = 0; i<(int)(objects.size()); i++)
+	{
+		SolidEntity *aux = dynamic_cast<SolidEntity *>(objects[i]);
+		if (aux) {//si es solido verifico el bounding box
+			if (aux->getAbsoluteBoundingBox().checkMinMax(b) == true)
+			{//si es un set, lo descompongo y si no ... lo agrego
+				ComposedEntity *aux2 = dynamic_cast<ComposedEntity *>(aux);
+				if (aux2)aux2->getPrimitivesCollidingBB(b, subset);
+				else {
+					subset.push_back(aux);
+				}
+
+			}
+
+
+		}
+
+	}
+}
 }//mr
