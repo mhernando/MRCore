@@ -215,6 +215,10 @@ namespace mr
 		glEnd();
 		glDisable(GL_BLEND);
 		glPopMatrix();
+		//test
+		Transformation3D T = getAbsoluteT3D();
+		absoluteSensorBox = T * sensorBox;
+		absoluteSensorBox.drawGL();
 
 	}
 

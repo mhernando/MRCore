@@ -68,7 +68,7 @@ void FaceSetPart::writeToXML(XMLElement* parent)
 		faces[i].writeToXML(parent);
 }
 
-
+#include <string.h>
 void FaceSetPart::readFromXML(XMLElement* parent)
 {	
 	SolidEntity::readFromXML(parent);
@@ -86,11 +86,15 @@ void FaceSetPart::readFromXML(XMLElement* parent)
 		}
 		for(int i=0;i<num;i++)
 		{
+			char buff[100];
+			_faces[i]->GetElementName(buff);
+			if (strcmp(buff, "face"))continue;
 			Face aux;
 			aux.readFromXML(_faces[i]);
 			addFace(aux);
 		}
 	}
+
 }
 
 char* FaceSetPart::CreateXMLText()

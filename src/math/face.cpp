@@ -181,7 +181,7 @@ void Face::readFromXML(XMLElement* parent)
 		char check_parent[50]={0};
 		if(parent->FindElementZ("face")) fac=parent->FindElementZ("face");
 		else fac=parent;
-
+		base.readFromXML(fac);
 			if (fac->FindElementZ("vertex"))
 			{
 				int num=fac->FindElementZ("vertex")->GetContentsNum();
@@ -217,7 +217,7 @@ void Face::readFromXML(XMLElement* parent)
 				b=colour->FindVariableZ("b")->GetValueFloat();
 		}
 
-		base.readFromXML(fac);
+	
 }
 
 void Face::updateData()

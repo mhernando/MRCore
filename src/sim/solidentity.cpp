@@ -84,7 +84,7 @@ void SolidEntity::readFromXML(XMLElement* parent)
 		//	solid=parent->FindElementZ("solidentity");
 		//else 
 		//	solid=parent;
-		
+	    setIntersectable(true);
 		if(parent->FindVariableZ("intersectable"))
 		{	
 			string cad;
@@ -92,7 +92,7 @@ void SolidEntity::readFromXML(XMLElement* parent)
 
 			if (cad=="true" || cad!="0")
 				setIntersectable(true);
-			else 
+			if (cad == "false")
 				setIntersectable(false);
 		}
 
