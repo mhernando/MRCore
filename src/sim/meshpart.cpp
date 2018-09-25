@@ -158,14 +158,14 @@ void MeshPart::drawGL()
 	glPopMatrix();
 	
 }
-bool MeshPart::rayIntersection(Vector3D &ori, Vector3D &dir, double &dist)
+bool MeshPart::rayIntersection(Vector3D &ori, Vector3D &dir, double &dist, Vector3D *n_aux)
 {
 	//chequeo min max
 	if(!intersectable)return false;
 	if(getAbsoluteBoundingBox().checkMinMax(ori,dir)==false)return false;
 	//actualizo si es necesario la posición de la malla
 	updateMesh();
-	return absoluteMesh.rayIntersection(ori,dir,dist);
+	return absoluteMesh.rayIntersection(ori,dir,dist, n_aux);
 }
 
 bool  MeshPart::segmentIntersection(const Segment3D &s,vector<Vector3D> *ipoints)

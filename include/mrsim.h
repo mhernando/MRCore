@@ -34,6 +34,7 @@
 #include "sim/sensors/lasersensorsim.h"
 #include "sim/sensors/lms100sim.h"
 #include "sim/sensors/lms200sim.h"
+#include "sim/sensors/ultrasonicsensor.h"
 #include "sim/simplejoint.h"
 #include "sim/solidentity.h"
 #include "sim/spherepart.h"

@@ -398,7 +398,7 @@ bool TriangleMesh::segmentTriangleIntersection(const TMTriangle &t, Segment3D &s
 		}
 	return false;
 }
-bool TriangleMesh::rayTriangleIntersection(const TMTriangle &tr, Vector3D &ori, Vector3D &dir, double &dist)
+bool TriangleMesh::rayTriangleIntersection(const TMTriangle &tr, Vector3D &ori, Vector3D &dir, double &dist, Vector3D *n_aux)
 {
 	Vector3D &ta=vertex[tr.a], &tb=vertex[tr.b],&tc=vertex[tr.c],n=tr.normal;
 	Vector3D u=(tb-ta);
@@ -437,6 +437,7 @@ bool TriangleMesh::rayTriangleIntersection(const TMTriangle &tr, Vector3D &ori, 
     t = (uv * wu - uu * wv) / D;
     if (t < 0.0 || (s + t) > 1.0)  return false;
         
+	if(n_aux)*n_aux = n;
 	return true;
 }
 bool TriangleMesh::segmentIntersection(Segment3D &s,vector<Vector3D> *ipoints)
@@ -451,16 +452,22 @@ if(box.checkMinMax(s)==false)return false;
 	}
 return flag;
 }
-bool TriangleMesh::rayIntersection(Vector3D &ori, Vector3D &dir, double &dist)
+bool TriangleMesh::rayIntersection(Vector3D &ori, Vector3D &dir, double &dist, Vector3D *n_aux)
 {
 double dist2;
 int i;
+Vector3D n;
 bool flag=false;
 if(box.checkMinMax(ori,dir)==false)return false;
 	for(i=0;i<(int)(triangles.size());i++){
-		if(rayTriangleIntersection(triangles[i],ori,dir,dist2)){
-			if(flag)dist=dist2<dist?dist2:dist;
-			else {flag=true; dist=dist2;}
+		if(rayTriangleIntersection(triangles[i],ori,dir,dist2, &n)){
+			if (flag) {
+				if (dist2 < dist) {
+					dist = dist2;
+					if(n_aux)*n_aux = n;
+				}
+			}
+			else { flag = true; dist = dist2; if(n_aux)*n_aux = n; }
 		}
 	}
 return flag;

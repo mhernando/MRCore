@@ -255,7 +255,7 @@ void PrismaticPart::drawGL()
 	glPopMatrix();
 	
 }
-bool PrismaticPart::rayIntersection(Vector3D &ori, Vector3D &dir, double &dist)
+bool PrismaticPart::rayIntersection(Vector3D &ori, Vector3D &dir, double &dist, Vector3D *n_aux)
 {
 	if(!intersectable)return false;
 	//chequeo min max
@@ -265,25 +265,29 @@ bool PrismaticPart::rayIntersection(Vector3D &ori, Vector3D &dir, double &dist)
 
 	bool flag=false;
 	double aux;
+	Vector3D n;
 	//base
-	if(Interactions::faceRay(absPolygonalBase,ori,dir,aux)){
-		if(!flag)dist=aux;
-		else if(aux<dist)dist=aux;
+	if(Interactions::faceRay(absPolygonalBase,ori,dir,aux, &n)){
+		if ((!flag)||(flag&&(aux<dist))) {
+			dist = aux; if (n_aux)*n_aux = n;
+		}
 		flag=true;
 	}
 	//top
-	if(Interactions::faceRay(absPolygonalTop,ori,dir,aux)){
-		if(!flag)dist=aux;
-		else if(aux<dist)dist=aux;
+	if(Interactions::faceRay(absPolygonalTop,ori,dir,aux,&n)){
+		if ((!flag) || (flag && (aux<dist))) {
+			dist = aux; if (n_aux)*n_aux = n;
+		}
 		flag=true;
 	}
 	//optimized lateral faces
 
 	for(int i=0;i<absPolygonalBase.getNumVertex();i++)
 	{
-		if(rayLateralIntersection(i,ori,dir,aux)){
-			if(!flag)dist=aux;
-			else if(aux<dist)dist=aux;
+		if(rayLateralIntersection(i,ori,dir,aux,&n)){
+			if ((!flag) || (flag && (aux<dist))) {
+				dist = aux; if (n_aux)*n_aux = n;
+			}
 			flag=true;
 		}
 	}
@@ -336,7 +340,7 @@ return flag;
 
 	
 }
-bool PrismaticPart::rayLateralIntersection(int i,Vector3D &ori, Vector3D &dir, double &dist)
+bool PrismaticPart::rayLateralIntersection(int i,Vector3D &ori, Vector3D &dir, double &dist, Vector3D *n_aux)
 {
 	Vector3D pori=absPolygonalBase.getAbsoluteVertex(i);
 	Vector3D &u=dir;
@@ -368,7 +372,7 @@ bool PrismaticPart::rayLateralIntersection(int i,Vector3D &ori, Vector3D &dir, d
 	if((vc<0)||(vc>height*height))return false;
 	uc=vv*planePoint;
 	if((uc<0)||(uc>vv*vv))return false;
-
+	if (n_aux) *n_aux = n;
 	return true;
 	
 }

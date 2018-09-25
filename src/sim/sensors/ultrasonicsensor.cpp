@@ -1,16 +1,25 @@
 #include "ultrasonicsensor.h"
-
+#include "../sim/prismaticpart.h"
 
 namespace mr
 {
 	IMPLEMENT_MR_OBJECT(UltrasonicSensor)
 
-		UltrasonicSensor::UltrasonicSensor()
+	UltrasonicSensor::UltrasonicSensor()
 	{
 		setDrawReferenceSystem(); //by default the refence system is drawn
 		setColor(1, 1, 0);
 		sensorActivated = true; //by default, when simulated... the values are computed
-		setSensorProperties(M_PI/12, 8, 0.5, 0);
+		setSensorProperties(DEG2RAD*10, 3, 0.05, 0);
+		//el cristal se pinta pero no se usa en la detección
+		PrismaticPart *piezo = new PrismaticPart();
+		piezo->setColor(0.9, 0.9, 0.9);
+		piezo->setRegularPolygonBase(0.025, 6);
+		piezo->setHeight(0.005);
+		piezo->setRelativeOrientation(0,M_PI/2,0);
+		//sensor non detectable by raytracing
+		piezo->setIntersectable(false);
+		(*this) += piezo;
 	}
 
 
@@ -125,7 +134,7 @@ namespace mr
 		vectorBeam.push_back(Vector3D(1, 0, 0));
 		for (double psi = conusAngle; psi >= 6 * M_PI / 180; psi -= 5 * M_PI / 180) {
 			double cpsi = cos(psi), spsi = sin(psi);
-			for (double alpha = 0; alpha < 2 * M_PI; alpha += M_PI / 8)
+			for (double alpha = 0; alpha < 2 * M_PI; alpha += M_PI / 5)
 				vectorBeam.push_back(Vector3D(cpsi, spsi*cos(alpha), spsi*sin(alpha)));
 		}
 		absoluteVectorBeam.resize(vectorBeam.size());
@@ -165,13 +174,18 @@ namespace mr
 		int num = (int)list.size();
 		measure = maxRange;
 		for (int i = 0; i < absoluteVectorBeam.size(); i++) {
-			double dist;
+			double dist= maxRange;
 			for (int j = 0; j < num; j++)
 			{
-				if (list[j]->rayIntersection(pos, absoluteVectorBeam[i], dist)) {
+				Vector3D n;
+				if (list[j]->rayIntersection(pos, absoluteVectorBeam[i], dist, &n)) {
 					if ((dist < minRange) || (dist > maxRange))continue;
 					//de momento tomo el valor mínimo.. pero aquí se podría hacer más con ruido y tal
-					if (dist < measure)dist = measure;
+					if (dist < measure) {
+						if (fabs(n*absoluteVectorBeam[i]) < 0.4)continue; //check if they are almost paralell
+						measure = dist;
+						
+					}
 				}
 			}
 
@@ -196,8 +210,8 @@ namespace mr
 
 	void UltrasonicSensor::drawGL()
 	{
-		//Draw axis
-		PositionableEntity::drawGL();
+		//Draw representation
+		ComposedEntity::drawGL();
 		//DrawData
 		glPushMatrix();
 		location.getAbsoluteT3D().transformGL();
@@ -205,20 +219,21 @@ namespace mr
 		//de momento pinto todos los haces como lineas suaves recortadas por el rango
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glColor4f(0, 0, 1, 0.5);
+		double r, g, b;
+		material.getColor(r,g,b);
+		float intensity = 1 - 0.99*(measure - minRange) / (maxRange - minRange);
+		glColor4f(r, g, b, intensity);
+		glLineWidth(intensity);
 		glBegin(GL_LINES);
 		for (int i = 0; i < vectorBeam.size(); i++) {
 			Vector3D v = vectorBeam[i];
 			glVertex3f(minRange*v.x, minRange*v.y, minRange*v.z);
-			glVertex3f(maxRange*v.x, maxRange*v.y, maxRange*v.z);
+			glVertex3f(measure*v.x, measure*v.y, measure*v.z);
 		}
 		glEnd();
 		glDisable(GL_BLEND);
 		glPopMatrix();
-		//test
-		Transformation3D T = getAbsoluteT3D();
-		absoluteSensorBox = T * sensorBox;
-		absoluteSensorBox.drawGL();
+
 
 	}
 

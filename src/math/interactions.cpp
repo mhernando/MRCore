@@ -37,7 +37,7 @@ bool Interactions::faceSegment(Face &face, const Segment3D &s, Vector3D &p)
 
 	
 }
-bool Interactions::faceRay(Face &face, Vector3D origin, Vector3D direction, double &distance)
+bool Interactions::faceRay(Face &face, Vector3D origin, Vector3D direction, double &distance, Vector3D *n_aux)
 {
 	
 	Vector3D &u=direction;
@@ -61,7 +61,11 @@ bool Interactions::faceRay(Face &face, Vector3D origin, Vector3D direction, doub
     // compute ray intersect point and
 	//transform to face coordinates
 	Vector3D p2d=face.base.obtainRelativeCoordinates(origin + u*distance);
-	return face.isInteriorPoint(Vector2D(p2d.x,p2d.y));
+	if (face.isInteriorPoint(Vector2D(p2d.x, p2d.y))) {
+		if (n_aux)*n_aux = n;
+		return true;
+	}
+	return false;
 
 	
 }

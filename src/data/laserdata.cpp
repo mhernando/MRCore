@@ -156,6 +156,7 @@ void LaserData::drawGL()
 		glGetFloatv(GL_CURRENT_COLOR,vauxColor);
 		vauxColor[3]=0.5F;
 		glColor4fv(vauxColor);
+		glLineWidth(0.4);
 		glBegin(GL_LINES);
 		for(unsigned int i=0;i<points.size();i++)
 		{
@@ -167,6 +168,7 @@ void LaserData::drawGL()
 	}
 	else if(drawGLMode==2)
 	{
+		glLineWidth(0.4);
 		glBegin(GL_LINE_STRIP);
 		glVertex3f(0,0,0);
 		for(unsigned int i=0;i<points.size();i++)

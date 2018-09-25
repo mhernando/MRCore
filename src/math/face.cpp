@@ -328,6 +328,7 @@ void Face::drawGL()
 	glDepthMask(GL_TRUE);
 	//GLTools::Color(CYAN,1.0f);
 	glColor4f(r,g,b,1);
+	glLineWidth(1);
 	glDisable(GL_LIGHTING);
 	glBegin(GL_LINE_STRIP);
 	for(i=0;i<num;i++)glVertex3f(vertex[i].x,vertex[i].y,0);

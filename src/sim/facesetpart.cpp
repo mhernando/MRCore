@@ -179,18 +179,20 @@ void FaceSetPart::drawGL()
 	for(int i=0;i<(int)(absolutefaces.size());i++)
 		absolutefaces[i].drawGL();
 }
-bool FaceSetPart::rayIntersection(Vector3D &ori, Vector3D &dir, double &dist)
+bool FaceSetPart::rayIntersection(Vector3D &ori, Vector3D &dir, double &dist, Vector3D *n_aux)
 {
 //chequeo min max
 if(!intersectable)return false;
 if(getAbsoluteBoundingBox().checkMinMax(ori,dir)==false)return false;
-
+Vector3D n;
 bool flag=false;
 double aux;
 	for(int i=0;i<(int)absolutefaces.size();i++){
-		if(Interactions::faceRay(absolutefaces[i],ori,dir,aux)){
-			if(!flag)dist=aux;
-			else if(aux<dist)dist=aux;
+		if(Interactions::faceRay(absolutefaces[i],ori,dir,aux,&n)){
+			if ((!flag) || (flag && (aux < dist))) {
+				dist = aux;
+				if (n_aux)*n_aux = n;
+			}
 			flag=true;
 		}
 	}

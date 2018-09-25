@@ -59,7 +59,7 @@ static bool faceSegment(Face &face, const Segment3D &s, Vector3D &p);
 // @param Vector3D direction: the direction and metric vector (usually is a unitary vector) .
 // @return true if intersects, distance would include the distance to the face plane if it is
 //posible to compute it (including negative values or the case of no intersection into the face).
-static bool faceRay(Face &face, Vector3D origin, Vector3D direction, double &distance);
+static bool faceRay(Face &face, Vector3D origin, Vector3D direction, double &distance, Vector3D *n_aux=0);
 
 };
 

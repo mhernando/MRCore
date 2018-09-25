@@ -128,7 +128,7 @@ public:
 	void drawGL();
 //specific operations that have to be implemented due to its solid entity condition
 	bool segmentIntersection(const Segment3D &s,vector<Vector3D> *ipoints);
-	bool rayIntersection(Vector3D &ori, Vector3D &dir, double &dist); 
+	bool rayIntersection(Vector3D &ori, Vector3D &dir, double &dist, Vector3D *n_aux=0);
 //specific operations due to its primitive condition
 	void createWiredModel();
 //specific realization of collision detection

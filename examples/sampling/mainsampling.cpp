@@ -23,43 +23,23 @@ void OnKeyboardDown(unsigned char key, int x, int y); //cuando se pulse una tecl
 void OnMouseMove(int x,int y);
 void OnMouseClick(int button,int state, int x,int y);
 //MeshPart *createMan(void);
-MeshPart *createWoodBench(void);
+//MeshPart *createWoodBench(void);
 //MeshPart *createPionerAT(void);
 //The scene global object
 GLScene scene;
 World world;
 
-WheeledBaseSim *myrobot;
+
 
 Sampler *samplerU,*samplerR, *samplerG,*sampler;
 BoundingBox box,box1,box2;
 vector<Sample> sampleSet;
-PathPlanner *planner;
-RobotState *auxrs=0;
-RobotPath solution;
-
-PositionableEntity *objeto1=0,*objeto2=0;
-
-ofstream *file;
-//int automatic <0 inactivo,  >=0 fase automatica
-int automatic=-2;
 
 
-//bool animation... solucion cutre para ver un poco como evoluciona
-bool ANIMATION=false;
+
+
 int iteracion=0;
 //***************variables globales para organizar un poco el sistema
-struct seleccion
-{
-	int samplerSel;
-	int environmentSel;
-	int numPlansSel;
-	int startGoalSel;
-	int times[2002];
-	int numNodes[2002];
-	
-	char fileName[100];
-}selection;
 
 
 
@@ -77,33 +57,9 @@ int main(int argc, char* argv[])
 	glutTimerFunc(100,OnTimer,0);
 	scene.init();
 
-	selection.environmentSel=0;
-	selection.numPlansSel=100;
-	selection.samplerSel=0;
-	selection.startGoalSel=0;
-	strcpy(selection.fileName,"outputData.txt");
-
-//Intializing test environment Faces included in a FacePart
-
-	samplerR=new RandomSampler(&world);
-	samplerG=new GaussianSampler(&world);
-	samplerU=new UniformSampler(&world);	
-	
-	loadEnvironment(3);
-
-	planner=new RDTplanner;
 
 
-	sampler=samplerR;
-
-	setStartGoal(1);
-
-
-
-
-//comparative 3D sampling 
-
-/*samplerR=new RandomSampler(Vector3D(0,0,0), Vector3D(10,10,10));
+samplerR=new RandomSampler(Vector3D(0,0,0), Vector3D(10,10,10));
 samplerU=new UniformSampler(Vector3D(12,0,0), Vector3D(10,10,10));
 samplerG=new GaussianSampler(Vector3D(24,0,0), Vector3D(10,10,10));
 
@@ -111,7 +67,6 @@ box=BoundingBox(Vector3D(0,0,0), Vector3D(10,10,10));
 box1=BoundingBox(Vector3D(12,0,0), Vector3D(22,10,10));
 box2=BoundingBox(Vector3D(24,0,0), Vector3D(34,10,10));
 
-*/
 //comparative 2D sampling 
 /*
 samplerR=new RandomSampler(Vector2D(0,0), Vector2D(10,10));

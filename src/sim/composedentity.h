@@ -94,8 +94,8 @@ public:
 	bool segmentIntersection(const Segment3D &s,vector<Vector3D> *ipoints){
 		return EntitySet::segmentIntersection(s,ipoints);
 		}
-	bool rayIntersection(Vector3D &ori, Vector3D &dir, double &dist){
-		return EntitySet::rayIntersection(ori, dir, dist);
+	bool rayIntersection(Vector3D &ori, Vector3D &dir, double &dist, Vector3D *n_aux=0){
+		return EntitySet::rayIntersection(ori, dir, dist, n_aux);
 		}
 	Tcp *getTcp(int num=0);
 	int getTcpIndex(Tcp *tcp);

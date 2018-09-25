@@ -138,7 +138,7 @@ public:
 	//returns true if the segment intersects. Si el vector no es nulo, entonces
 	//computa todas las intersecciones y las guarda en ipoints
 	virtual bool segmentIntersection(const Segment3D &s,vector<Vector3D> *ipoints)=0;
-	virtual bool rayIntersection(Vector3D &ori, Vector3D &dir, double &dist)=0;
+	virtual bool rayIntersection(Vector3D &ori, Vector3D &dir, double &dist, Vector3D *n_aux=0)=0;
 	//return true if there is collision between this object and the parameter
 
 	//it have to be redefined chaeqs the evolving boxes, and gives the priority to

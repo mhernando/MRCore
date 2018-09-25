@@ -82,7 +82,7 @@ protected:
 	int addVertex(const Vector3D &v); //a vertex is added only if it is different. the function returns the vector index
 	int addEdge(int a, int b);
 	bool segmentTriangleIntersection(const TMTriangle &t,  Segment3D &s,vector<Vector3D> *ipoints);
-	bool rayTriangleIntersection(const TMTriangle &t, Vector3D &ori, Vector3D &dir, double &dist);
+	bool rayTriangleIntersection(const TMTriangle &t, Vector3D &ori, Vector3D &dir, double &dist, Vector3D *n_aux=0);
 public:
 	friend ostream& operator<<(ostream& os, const TriangleMesh& p);
 //constructors
@@ -109,7 +109,7 @@ public:
 	//(no inline construction is possible)TMTriangle
 	BoundingBox getBoundingBox(){return box;}
 	bool segmentIntersection(Segment3D &s,vector<Vector3D> *ipoints);
-	bool rayIntersection(Vector3D &ori, Vector3D &dir, double &dist);
+	bool rayIntersection(Vector3D &ori, Vector3D &dir, double &dist, Vector3D *n_aux=0);
 };
 
 }

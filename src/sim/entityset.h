@@ -114,7 +114,7 @@ public:
 	PositionableEntity *getObjectByName(string _name);
 	//aplies to each solid entity their methods for basic intersections
 	virtual bool segmentIntersection(const Segment3D &s,vector<Vector3D> *ipoints);
-	virtual bool rayIntersection(Vector3D &ori, Vector3D &dir, double &dist);
+	virtual bool rayIntersection(Vector3D &ori, Vector3D &dir, double &dist, Vector3D *n_aux=0);
 
 	//filters: getting a subset of object with some criteria. Just for optimizing some massive operations like
 	//ray tracing

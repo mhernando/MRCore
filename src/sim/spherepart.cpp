@@ -277,7 +277,7 @@ void SpherePart::drawGL()
 	glPopMatrix();
 }
 
-bool SpherePart::rayIntersection(Vector3D &ori, Vector3D &dir, double &dist)
+bool SpherePart::rayIntersection(Vector3D &ori, Vector3D &dir, double &dist, Vector3D *n_aux)
 {
 	if(!intersectable)
 		return false;

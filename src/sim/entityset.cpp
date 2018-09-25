@@ -496,7 +496,7 @@ bool EntitySet::segmentIntersection(const Segment3D &s,vector<Vector3D> *ipoints
 return flag;
 }
 
-bool EntitySet::rayIntersection(Vector3D &ori, Vector3D &dir, double &dist)
+bool EntitySet::rayIntersection(Vector3D &ori, Vector3D &dir, double &dist, Vector3D *n_aux)
 {
 	SolidEntity *me=dynamic_cast<SolidEntity *>(this);
 	if((me)&&(!(me->isIntersectable())))return false;
@@ -506,11 +506,14 @@ bool EntitySet::rayIntersection(Vector3D &ori, Vector3D &dir, double &dist)
 	{
 		SolidEntity *aux=dynamic_cast<SolidEntity *>(objects[i]);
 		double distAux;
+		Vector3D n;
 		if(aux){
-			if(aux->rayIntersection(ori,dir,distAux)){
-				if(!flag)dist=distAux;
-				else dist=distAux<dist?distAux:dist;
-				flag=true;
+			if(aux->rayIntersection(ori,dir,distAux,&n)){
+				if ((!flag)||(flag&&(distAux<dist))) { 
+					dist = distAux; 
+					if(n_aux)*n_aux = n; 
+				}
+			flag=true;
 			}
 		}
 	}
