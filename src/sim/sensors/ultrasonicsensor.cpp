@@ -10,7 +10,9 @@ namespace mr
 		setDrawReferenceSystem(); //by default the refence system is drawn
 		setColor(1, 1, 0);
 		sensorActivated = true; //by default, when simulated... the values are computed
+		measure = 3;
 		setSensorProperties(DEG2RAD*10, 3, 0.05, 0);
+		beamNeedToBeUpdated = true;
 		//el cristal se pinta pero no se usa en la detección
 		PrismaticPart *piezo = new PrismaticPart();
 		piezo->setColor(0.9, 0.9, 0.9);
