@@ -35,7 +35,7 @@
 #include <iostream>
 #include <string>
 
-
+#include "glbasicFont.c"
 //#pragma comment (lib, "Opengl32.lib") 
 //#pragma comment (lib, "glu32.lib") 
 //#pragma comment (lib, "glaux.lib") 
@@ -48,7 +48,7 @@ namespace mr
 {
 std::vector<std::string> GLTools::textures_names;
 std::vector<unsigned int> GLTools::textures_ids;
-
+unsigned int textTexture = 0;
 void GLTools::Color(int i,float transparency)
 {	
 	if(i==BLACK)		glColor4f(0,0,0,transparency);
@@ -87,59 +87,37 @@ void GLTools::BackgroundColor(int i)
 
 void GLTools::Print(string msg, float x,float y,float z)
 {
-/*	glDisable(GL_LIGHTING);
-	int len, i;
-	glRasterPos3f(x, y,z);
-	len = (int) msg.size();
-	for (i = 0; i < len; i++)
-		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, msg[i]);*/
-		
-		//Texto
-	glDisable (GL_LIGHTING);
-	
-  	glRasterPos3f(x,y,z);
-	glListBase (1000);
-	glCallLists ((GLsizei)msg.size(), GL_UNSIGNED_BYTE, msg.c_str()); 
-	glEnable (GL_LIGHTING);
 
+}
+//only prints... position is responsability of the user
+void DrawCharacter(char c)
+{
+	int column = c % 16, row = c / 16;
+	float x, y, inc = 1.f / 16.f;
+	x = column * inc;
+	y = 1 - (row * inc) - inc;
 
+	glBegin(GL_QUADS);
+	glTexCoord2f(x, y);       glVertex3f(0.f, 0.f, 0.f);
+	glTexCoord2f(x, y + inc); glVertex3f(0.f, 1.f, 0.f);
+	glTexCoord2f(x + inc, y + inc); glVertex3f(1.f, 1.f, 0.f);
+	glTexCoord2f(x + inc, y);       glVertex3f(1.f, 0.f, 0.f);
+	glEnd();
+}
+void GLTools::Print(const char *msg, float size=1.0F)
+{
+	if (!textTexture) {
+		glEnable(GL_TEXTURE_2D);
+		glGenTextures(1, &textTexture);
+		glBindTexture(GL_TEXTURE_2D, textTexture);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, gimp_image.width, gimp_image.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, gimp_image.pixel_data);
+		//load
+	}
+	for (int i = 0; i < strlen(msg); i++) {
 
-
-/*	
-
-	glMatrixMode(GL_TEXTURE);
-	glPushMatrix();
-	glLoadIdentity();
-
-	glMatrixMode(GL_PROJECTION);
-	glPushMatrix();
-	glLoadIdentity();
-//	gluOrtho2D(0, glutGet(GLUT_WINDOW_WIDTH), 0, glutGet(GLUT_WINDOW_HEIGHT) );
-
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-	glLoadIdentity();
-
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	glDisable(GL_DEPTH_TEST);
-	glDisable(GL_BLEND);
-	glColor3ub(r,g,b);
-//	glRasterPos3f(x, glutGet(GLUT_WINDOW_HEIGHT)-18-y, 0);
-	int len = strlen (mensaje );
-//	for (int i = 0; i < len; i++) 
-//		glutBitmapCharacter (GLUT_BITMAP_HELVETICA_18, mensaje[i] );
-	
-	
-	glMatrixMode(GL_TEXTURE);
-	glPopMatrix();
-
-	glMatrixMode(GL_PROJECTION);
-	glPopMatrix();
-
-	glMatrixMode(GL_MODELVIEW);
-	glPopMatrix();
-
-	glEnable( GL_DEPTH_TEST );*/
+	}
 }
 unsigned int GLTools::LoadTexture(string nombre)
 {

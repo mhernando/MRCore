@@ -70,7 +70,7 @@ public:
 	static void DeleteTextures();
 //Text utilities
 	static void Print(string msg, float x=0, float y=0,float z=0);
-	
+	static void Print(const char *msg, float size = 1.0F);
 //Primitives
 	static void DrawEllipse(float xo,float yo,float tho,float A,float B, float C,float scale=1);///Ax2+Bxy+Cy2
 	static void DrawFrame();
@@ -78,6 +78,7 @@ public:
 protected:
 	static std::vector<string> textures_names;
 	static std::vector<unsigned int> textures_ids;
+	static unsigned int textTexture;
 };
 
 }; //end namespace mr
