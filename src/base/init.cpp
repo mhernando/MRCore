@@ -48,6 +48,7 @@
 #include "../sim/miscelaneous/quadrotorsim.h"
 #include "../sim/manipulators/euitibotsim.h"
 #include "../sim/sensors/ultrasonicsensor.h"
+#include "../sim/sensors/landmark.h"
 #include "../sim/world.h"
 
 namespace mr
@@ -75,6 +76,7 @@ void mrcoreInit()
 	EUITIbotSim ebot;
 	World world;
 	UltrasonicSensor usensor;
+	LandMark lmark;
 
 
 } //mr

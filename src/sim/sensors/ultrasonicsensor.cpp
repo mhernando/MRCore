@@ -217,6 +217,10 @@ namespace mr
 		//DrawData
 		glPushMatrix();
 		location.getAbsoluteT3D().transformGL();
+
+		//prueba
+		//GLTools::Print("ABCDEFGHIJKLMabcdefghijklm", 0.1);
+		
 		material.loadMaterial();
 		//de momento pinto todos los haces como lineas suaves recortadas por el rango
 		glEnable(GL_BLEND);

@@ -33,7 +33,7 @@
 
 #include "lasersensorsim.h"
 #include "../gl/gltools.h"
-
+#include "landmark.h"
 #include <math.h>
 
 namespace mr{
@@ -204,6 +204,37 @@ void LaserSensorSim::updateSensorData(World *w,float dt)
 		data.setRange(i,daux);
 	}
 }
+bool LaserSensorSim::detectLandMarks(vector<LandMarkInfo> &v)
+{
+
+	World *w = getWorld();
+	if (w == 0)return false;
+	if (sensorActivated == false)return false;
+	Transformation3D T = getAbsoluteT3D();
+	OrientationMatrix O = T.orientation.transposed();
+	//plane filter
+	vector<LandMark *> list;
+	w->getObjectsOftype(list);
+	for (int i = 0; i < list.size(); i++) {
+		Vector3D pl = list[i]->getAbsoluteT3D().position;
+		Vector3D ray = pl - T.position;
+		double dist=ray.module(),ddist;
+		//debe estar en el mismo plano aprox
+		if (ray*T.getVectorW() > list[i]->getMarkSize())continue;
+		ray.normalize();
+		if (dist > maxRange)continue;
+		if (w->rayIntersection(T.position, ray, ddist))
+		{
+			if (ddist < dist + 0.01)continue;
+			Vector3D relray = O * ray;
+			double angle = atan2(relray.y, relray.x);
+			if ((angle < startAngle) || (angle > startAngle + stepAngle * numSteps))continue;
+			v.push_back(LandMarkInfo(list[i]->getMarkId(), dist, angle));
+		}
+	}
+	if (v.size() > 0)return true;
+	return false;
+}
 //VERSION BASICA
 /*
 void LaserSensorSim::updateSensorData(World *w,float dt)
@@ -231,8 +262,23 @@ void LaserSensorSim::drawGL()
 	location.getAbsoluteT3D().transformGL();
 	material.loadMaterial();
 	data.drawGL();
-	glPopMatrix();
+	
 	m.Unlock();
+	//test detect landmarks
+	if(true){
+		vector<LandMarkInfo> v;
+		detectLandMarks(v);
+		glColor3f(1,0,0);
+		glLineWidth(0.4);
+		glBegin(GL_LINES);
+		for (int i = 0; i < v.size(); i++) {
+			glVertex3f(0, 0, 0);
+			glVertex3f(v[i].dist*cos(v[i].ang), v[i].dist*sin(v[i].ang), 0);
+		}
+		glEnd();
+
+	}
+	glPopMatrix();
 }
 
 }//mr

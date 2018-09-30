@@ -25,6 +25,7 @@ namespace mr
 		friend ostream& operator<<(ostream& os, const LandMark& p);
 	protected:
 		int mark_id;
+		double lm_size;
 	public:
 		//attributes
 
@@ -41,6 +42,8 @@ namespace mr
 		virtual void loadFromXMLText(char* XmlText);
 		//set sensor properties
 		void setMarkId(int mark);
+		double getMarkSize() {return lm_size;}
+		int getMarkId() { return mark_id; }
 		void drawGL();
 	};
 

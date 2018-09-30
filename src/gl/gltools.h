@@ -78,7 +78,7 @@ public:
 protected:
 	static std::vector<string> textures_names;
 	static std::vector<unsigned int> textures_ids;
-	static unsigned int textTexture;
+
 };
 
 }; //end namespace mr

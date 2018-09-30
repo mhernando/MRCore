@@ -8,6 +8,7 @@ namespace mr
 	LandMark::LandMark(int mark_id)
 	{
 		this->mark_id = mark_id;
+		lm_size = 0.4;
 	}
 
 	LandMark::~LandMark()
@@ -73,25 +74,12 @@ namespace mr
 		//Draw representation
 		PositionableEntity::drawGL();
 		//DrawData
+		char ids[20];
+		sprintf(ids, "LM:%d", mark_id);
 		glPushMatrix();
 		location.getAbsoluteT3D().transformGL();
-		material.loadMaterial();
-		//de momento pinto todos los haces como lineas suaves recortadas por el rango
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		double r, g, b;
-		material.getColor(r,g,b);
-		float intensity = 1 - 0.99*(measure - minRange) / (maxRange - minRange);
-		glColor4f(r, g, b, intensity);
-		glLineWidth(intensity);
-		glBegin(GL_LINES);
-		for (int i = 0; i < vectorBeam.size(); i++) {
-			Vector3D v = vectorBeam[i];
-			glVertex3f(minRange*v.x, minRange*v.y, minRange*v.z);
-			glVertex3f(measure*v.x, measure*v.y, measure*v.z);
-		}
-		glEnd();
-		glDisable(GL_BLEND);
+		glColor3f(0, 1, 0);
+		GLTools::Print(ids, 0.2);
 		glPopMatrix();
 
 

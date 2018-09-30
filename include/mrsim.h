@@ -30,6 +30,7 @@
 #include "sim/rovers/wheeledbasesim.h"
 #include "sim/sensors/camerasim.h"
 #include "sim/sensors/kinectsim.h"
+#include "sim/sensors/landmark.h"
 #include "sim/sensors/lasersensor3dsim.h"
 #include "sim/sensors/lasersensorsim.h"
 #include "sim/sensors/lms100sim.h"

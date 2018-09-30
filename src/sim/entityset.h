@@ -118,7 +118,17 @@ public:
 
 	//filters: getting a subset of object with some criteria. Just for optimizing some massive operations like
 	//ray tracing
-
+	template<class T> bool getObjectsOftype(vector<T *> &v) {
+		for (int i = 0; i<(int)(objects.size()); i++)
+		{
+			EntitySet *aux= dynamic_cast<EntitySet *>(objects[i]);
+			if (aux)aux->getObjectsOftype(v);
+			T *aux2 = dynamic_cast<T *>(objects[i]);
+			if (aux2)v.push_back(aux2);
+		}
+		if (v.size() > 0)return true;
+		return false;
+	}
 	//Retrieves a list of primitives whose bounding boxes are cut by a plane defined by a ref system
 	void getPrimitivesBoundingBoxesCutByPlane(const Transformation3D &t, vector<SolidEntity *> &subset, double range=-1);
 	void getPrimitivesCollidingBB(const BoundingBox &b, vector<SolidEntity *> &subset);

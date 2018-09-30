@@ -81,6 +81,13 @@ protected:
 	Mutex m;
 	bool sensorActivated; //true if when simulated... is updated
 public:
+//classes
+	struct LandMarkInfo {
+		int ID;
+		double dist;
+		double ang;
+		LandMarkInfo(int _ID, double _dist, double _ang) :ID(_ID), dist(_dist), ang(_ang) {}
+	};
 //attributes
 	
 //constructors
@@ -124,6 +131,7 @@ public:
 		data=d;
 		m.Unlock();
 	}
+	virtual bool detectLandMarks(vector<LandMarkInfo> &v);
 };
 
 };

@@ -34,8 +34,7 @@
 
 #include <iostream>
 #include <string>
-
-#include "glbasicFont.c"
+#include "font.h"
 //#pragma comment (lib, "Opengl32.lib") 
 //#pragma comment (lib, "glu32.lib") 
 //#pragma comment (lib, "glaux.lib") 
@@ -48,7 +47,7 @@ namespace mr
 {
 std::vector<std::string> GLTools::textures_names;
 std::vector<unsigned int> GLTools::textures_ids;
-unsigned int textTexture = 0;
+static unsigned int textTexture = 0;
 void GLTools::Color(int i,float transparency)
 {	
 	if(i==BLACK)		glColor4f(0,0,0,transparency);
@@ -90,34 +89,60 @@ void GLTools::Print(string msg, float x,float y,float z)
 
 }
 //only prints... position is responsability of the user
-void DrawCharacter(char c)
+void DrawCharacter(char c, float size)
 {
-	int column = c % 16, row = c / 16;
+	int column = c % 16, row = 15-c / 16;
 	float x, y, inc = 1.f / 16.f;
 	x = column * inc;
 	y = 1 - (row * inc) - inc;
 
 	glBegin(GL_QUADS);
-	glTexCoord2f(x, y);       glVertex3f(0.f, 0.f, 0.f);
-	glTexCoord2f(x, y + inc); glVertex3f(0.f, 1.f, 0.f);
-	glTexCoord2f(x + inc, y + inc); glVertex3f(1.f, 1.f, 0.f);
-	glTexCoord2f(x + inc, y);       glVertex3f(1.f, 0.f, 0.f);
+	glTexCoord2f(x, y+inc);       glVertex3f(0.f, 0.f, 0.f);
+	glTexCoord2f(x, y ); glVertex3f(0.f, size*1.f, 0.f);
+	glTexCoord2f(x + inc, y ); glVertex3f(size*1.f, size*1.f, 0.f);
+	glTexCoord2f(x + inc, y + inc);       glVertex3f(size*1.f, 0.f, 0.f);
 	glEnd();
 }
-void GLTools::Print(const char *msg, float size=1.0F)
+void GLTools::Print(const char *msg, float size)
 {
+
+	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_BLEND);
+	glAlphaFunc(GL_GREATER, 0.01);
+	glEnable(GL_ALPHA_TEST);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	if (!textTexture) {
-		glEnable(GL_TEXTURE_2D);
 		glGenTextures(1, &textTexture);
 		glBindTexture(GL_TEXTURE_2D, textTexture);
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, gimp_image.width, gimp_image.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, gimp_image.pixel_data);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		gluBuild2DMipmaps(GL_TEXTURE_2D, 4,	fontwidth, fontheigh, GL_RGBA, GL_UNSIGNED_BYTE, fontdata);
+		glBindTexture(GL_TEXTURE_2D, 0);
+		//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, fontwidth, fontheigh, 0, GL_RGBA, GL_UNSIGNED_BYTE, fontdata);
 		//load
 	}
+	glPushMatrix();
+	GLfloat m[16];
+	glGetFloatv(GL_MODELVIEW_MATRIX, m);
+	m[0] = m[5] = m[10] = 1.0F;
+	m[1] = m[2] = m[4] = m[6] = m[8] = m[9] = 0;
+	glLoadMatrixf(m);
+	glBindTexture(GL_TEXTURE_2D, textTexture);
+	glDisable(GL_LIGHTING);
 	for (int i = 0; i < strlen(msg); i++) {
-
+		//glColor3f(0, 1, 0); //de momento
+		DrawCharacter(msg[i], size);
+		glTranslated(size*0.6, 0, 0);
+		
 	}
+	glDisable(GL_BLEND);
+	glEnable(GL_LIGHTING);
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_ALPHA_TEST);
+	glPopMatrix();
 }
 unsigned int GLTools::LoadTexture(string nombre)
 {

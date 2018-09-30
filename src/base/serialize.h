@@ -9,7 +9,8 @@
 
 #if !defined(_SERIALIZE_INCLUDED_)
 #define _SERIALIZE_INCLUDED_
-
+namespace mr
+{
 #define writeChar(x, y, z)     {x[y++] = z;}
 #define writeShort(x, y, z)     {*((unsigned short *)((char *)&x[y])) = z; y += 2;}
 #define writeLong(x, y, z)      {*((unsigned long  *)((char *)&x[y])) = z; y += 4;}
@@ -21,5 +22,5 @@
 #define readLong(x, y, z)       {z = (*(unsigned long  *)((char *)&x[y])); y += 4;}
 #define readFloat(x, y, z)      {z = (*(float  *)((char *)&x[y])); y += 4;}
 #define readDouble(x, y, z)     {z = (*(double *)((char *)&x[y])); y += 8;}
-
+}
 #endif // !defined(AFX_SOCKETNODE_H__895095F5_AD65_4FF5_973F_0DD16E9BC2FE__INCLUDED_)
