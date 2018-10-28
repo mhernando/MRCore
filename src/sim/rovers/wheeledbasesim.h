@@ -37,6 +37,7 @@
 #include "base/globject.h"
 #include "../sim/composedentity.h"
 #include "../math/transformation2d.h"
+#include "../data/wbodometry.h"
 
 namespace mr
 {
@@ -80,12 +81,12 @@ public:
 		_rotSpeed=rotSpeed;
 	}
 	double getWheelRadius(){return wheel_radius;}
+	WBodometry &getWBodometry() { return wbodometry; }
 
-
-	//if the pose is valid, it is stored into t... coution the pose of the wb is modified
     bool dropWheeledBase(Transformation3D &t, World *w=0);
 protected:
 	Odometry odometry;
+	WBodometry wbodometry;
 	double speed;
 	double rotSpeed;
 	//generic data for wheels geometry

@@ -65,6 +65,10 @@ public:
 
 	Angle operator -(const Angle& ang) const;
 	Angle operator +(const Angle& ang) const;
+	Angle operator += (const Angle& ang) {
+		*this = *this + ang;
+		return *this;
+	}
 	bool operator < (const Angle& ang) const;
 	bool operator > (const Angle& ang) const;
 	bool operator <= (const Angle& ang) const;

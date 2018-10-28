@@ -18,6 +18,7 @@ WheeledBaseSim::WheeledBaseSim(double w, double l, double wh_radius, double wh_w
 	wheels[1]=Vector3D(large/2,-(width+wheel_width)/2,wheel_radius);
 	wheels[2]=Vector3D(-large/2,(width+wheel_width)/2,wheel_radius);
 	wheels[3]=Vector3D(-large/2,-(width+wheel_width)/2,wheel_radius);
+	wbodometry.reset(this);
 }
 //serializers
 void WheeledBaseSim::writeToStream(Stream& stream)
@@ -36,6 +37,7 @@ void WheeledBaseSim::readFromStream(Stream& stream)
 	stream>>width>>large>>wheel_radius>>wheel_width;
 	stream>>speed>>rotSpeed;
 	odometry.readFromStream(stream);
+	wbodometry.reset(this);
 	//specific initializations
 	wheels[0]=Vector3D(large/2,(width+wheel_width)/2,wheel_radius);
 	wheels[1]=Vector3D(large/2,-(width+wheel_width)/2,wheel_radius);
@@ -77,7 +79,14 @@ void WheeledBaseSim::readFromXML(XMLElement* parent)
 		rotSpeed=XMLAux::GetValueDouble(parent->FindVariableZ("rotSpeed"));
 
 	}
+	if (parent->FindVariableZ("odometryNoise"))
+	{
+		double noise= XMLAux::GetValueDouble(parent->FindVariableZ("odometryNoise"));
+		wbodometry.setNoiseProperties(noise, noise);
 
+	}
+
+	wbodometry.reset(this);
 }
 
 char* WheeledBaseSim::CreateXMLText()
@@ -132,6 +141,8 @@ void WheeledBaseSim::simulate(double delta_t)
 	//esta es la posicion teórica simple de los encoders en caso de que el robot pueda moverse
 	odometry.pose*=delta;
 	odometry.timeStamp();
+	//nueva version
+	wbodometry.update(this);
 }
 void WheeledBaseSim::drawGL()
 {

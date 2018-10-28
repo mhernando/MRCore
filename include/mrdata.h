@@ -8,4 +8,5 @@
 #include "data/pointcloud.h"
 #include "data/quadrotordata.h"
 #include "data/sonardata.h"
+#include "data/wbodometry.h"
 #endif // __MRdata_H__
