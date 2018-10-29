@@ -19,6 +19,7 @@
 #include "sim/miscelaneous/quadrotorsim.h"
 #include "sim/miscelaneous/simulator.h"
 #include "sim/miscelaneous/voicettssim.h"
+#include "sim/miscelaneous/worldinfo.h"
 #include "sim/positionableentity.h"
 #include "sim/primitivesolidentity.h"
 #include "sim/prismaticpart.h"

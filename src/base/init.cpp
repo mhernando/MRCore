@@ -50,6 +50,7 @@
 #include "../sim/sensors/ultrasonicsensor.h"
 #include "../sim/sensors/landmark.h"
 #include "../sim/world.h"
+#include "../sim/miscelaneous/worldinfo.h"
 
 namespace mr
 {
@@ -77,6 +78,7 @@ void mrcoreInit()
 	World world;
 	UltrasonicSensor usensor;
 	LandMark lmark;
+	WorldInfo winfo;
 
 
 } //mr

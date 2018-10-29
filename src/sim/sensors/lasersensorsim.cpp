@@ -35,7 +35,7 @@
 #include "../gl/gltools.h"
 #include "landmark.h"
 #include <math.h>
-
+#include "math/gaussian.h"
 namespace mr{
 
 void LaserSensorSim::writeToStream(Stream& stream)
@@ -132,6 +132,7 @@ LaserSensorSim::LaserSensorSim(void)
 setDrawReferenceSystem(); //by default the refence system is drawn
 setColor(1,1,0);
 sensorActivated=true; //by default, when simulated... the values are computed
+d_variance=lm_d_variance=lm_ang_variance=0;
 }
 
 
@@ -156,6 +157,7 @@ stepAngle=_step;
 numSteps=_numsteps;
 maxRange=_maxrange;
 sigma=_sigma;
+d_variance = lm_d_variance = lm_ang_variance = sigma;
 data.setProperties(startAngle,stepAngle, numSteps,maxRange,sigma);
 
 //segments have to be recomputed.
@@ -201,6 +203,8 @@ void LaserSensorSim::updateSensorData(World *w,float dt)
 			if(list[j]->rayIntersection(pos,absoluteVectorBeam[i],dist))
 				if(dist<daux)daux=dist;
 		}
+		daux = sampleGaussian(daux, d_variance);
+		if (daux > maxRange)daux = maxRange;
 		data.setRange(i,daux);
 	}
 }
@@ -229,6 +233,9 @@ bool LaserSensorSim::detectLandMarks(vector<LandMarkInfo> &v)
 			Vector3D relray = O * ray;
 			double angle = atan2(relray.y, relray.x);
 			if ((angle < startAngle) || (angle > startAngle + stepAngle * numSteps))continue;
+			angle = sampleGaussian(angle, lm_ang_variance);
+			dist = sampleGaussian(angle, lm_d_variance);
+			if (dist > maxRange)dist = maxRange;
 			v.push_back(LandMarkInfo(list[i]->getMarkId(), dist, angle));
 		}
 	}

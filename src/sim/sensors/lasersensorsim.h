@@ -80,6 +80,11 @@ protected:
 	void updateBeam();
 	Mutex m;
 	bool sensorActivated; //true if when simulated... is updated
+
+	//new variance data:
+	double d_variance;
+	double lm_d_variance;
+	double lm_ang_variance;
 public:
 //classes
 	struct LandMarkInfo {
@@ -108,6 +113,9 @@ public:
 	//set laser properties
 	void setLaserProperties(double _startangle, double _step, int _numsteps, 
 								double _maxrange, double _sigma);
+	void setLaserVariances(double d_v, double lm_d_v, double lm_ang_v) {
+		d_variance = d_v; lm_d_variance = lm_d_v;  lm_ang_variance = lm_ang_v;
+	}
 	void updateSensorData(World *w=0,float dt=0);
 	void drawGL();
 	void setDrawGLMode(int m){data.drawGLMode=m;}
