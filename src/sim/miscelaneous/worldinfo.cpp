@@ -157,6 +157,7 @@ void WorldInfo::updateWorld()
 	for (int i = 0; i < listwb.size(); i++) 
 		(listwb[i]->getWBodometry()).setNoiseProperties(odom_v, odom_w);
 	vector<LaserSensorSim *> listls;
+	getWorld()->getObjectsOftype(listls);
 	for (int i = 0; i < listls.size(); i++)
 		listls[i]->setLaserVariances(laser_d, laser_lm_d, laser_lm_ang);
 

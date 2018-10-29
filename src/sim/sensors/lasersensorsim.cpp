@@ -234,7 +234,7 @@ bool LaserSensorSim::detectLandMarks(vector<LandMarkInfo> &v)
 			double angle = atan2(relray.y, relray.x);
 			if ((angle < startAngle) || (angle > startAngle + stepAngle * numSteps))continue;
 			angle = sampleGaussian(angle, lm_ang_variance);
-			dist = sampleGaussian(angle, lm_d_variance);
+			dist = sampleGaussian(dist, lm_d_variance);
 			if (dist > maxRange)dist = maxRange;
 			v.push_back(LandMarkInfo(list[i]->getMarkId(), dist, angle));
 		}
