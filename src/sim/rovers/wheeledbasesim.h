@@ -84,6 +84,7 @@ public:
 	WBodometry &getWBodometry() { return wbodometry; }
 
     bool dropWheeledBase(Transformation3D &t, World *w=0);
+	bool getMoveSuccess() { return move_success; }
 protected:
 	Odometry odometry;
 	WBodometry wbodometry;
@@ -94,7 +95,7 @@ protected:
 	double large;
 	double wheel_radius;//total outer radius
 	double wheel_width;
-	
+	bool move_success; //utility bool that checks if last move was possible (not collision, not off ground)
 	Vector3D wheels[4];
 
 

@@ -109,7 +109,7 @@ void WheeledBaseSim::simulate(double delta_t)
 	double delta_x=speed*delta_t;
 	double delta_y=0;
 	double delta_th=rotSpeed*delta_t;
-	
+	move_success = false;
 	/*verificar si la posicion de destino es valida: se verifica
 	de manera simple lanzando unos rayos  abajo segun el eje Z desde los centros de las ruedas
 	para ello hay que discretizar la trayectoria en trozitos del tamaño de un radio como maximo
@@ -143,6 +143,7 @@ void WheeledBaseSim::simulate(double delta_t)
 	odometry.timeStamp();
 	//nueva version
 	wbodometry.update(this);
+	move_success = true; //se pudo realizar el movimiento
 }
 void WheeledBaseSim::drawGL()
 {
