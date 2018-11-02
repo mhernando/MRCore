@@ -111,8 +111,10 @@ void GLTools::Print(const char *msg, float size)
 	glAlphaFunc(GL_GREATER, 0.01);
 	glEnable(GL_ALPHA_TEST);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	if (!textTexture) {
-		glGenTextures(1, &textTexture);
+	//if (!textTexture) {
+	//	glGenTextures(1, &textTexture);
+	if(!glIsTexture(textTexture)){
+		textTexture = 1;
 		glBindTexture(GL_TEXTURE_2D, textTexture);
 		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
