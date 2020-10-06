@@ -2,7 +2,7 @@
 
 #include <iostream>
 using namespace std;
-void main()
+int main()
 {
 	mr::Vector3D miVector(2,3,4),m;
 	m=miVector*4;
@@ -35,4 +35,5 @@ void main()
 	cout<<0.4<<" "<<p<<std::endl;
 	cout<<0.2<<" "<<y<<std::endl;
 std::cin>>m.y;
+return 1;
 }

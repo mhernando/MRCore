@@ -262,7 +262,7 @@ RDTplanner *paux=(RDTplanner *)planner;
 		automatic++;
 		
 
-		//condicion de finalización
+		//condicion de finalizaciï¿½n
 		if(automatic>2*(selection.numPlansSel)){
 			*file<<"____________________\tT.med \t T.desv \t Nodes.med \t Nodes.desv"<<std::endl;
 			*file<<"UNIFORM SAMPLING: "<<selection.times[0]<<"\t  0.0\t"<<selection.numNodes[0]<<"\t 0.0"<<std::endl;
@@ -374,10 +374,10 @@ void OnKeyboardDown(unsigned char key, int x, int y)
 	if(key=='A')
 	{
 		automatic = 0;
-		//ejecucion automática de test con medidas de tiempo, etc
+		//ejecucion automï¿½tica de test con medidas de tiempo, etc
 		return;
 	}
-	if(automatic>=0)return; //mientras hay ejecucion automática... no se puede hacer nada
+	if(automatic>=0)return; //mientras hay ejecucion automï¿½tica... no se puede hacer nada
 	
 	if(key=='v') variaEntorno();
 	if(key=='i')srand( (unsigned)time( NULL ) );
@@ -538,8 +538,9 @@ void createEnvironment2()
 	room->addFace(paredpuerta);
 
 	FaceSetPart *roomi=new FaceSetPart;
-	paredcerca.setOrigin(Vector3D(0,1,0));
-	paredpuerta.setOrigin(Vector3D(0,4,0));
+	Vector3D vo1(0,1,0),vo2(0,4,0);
+	paredcerca.setOrigin(vo1);
+	paredpuerta.setOrigin(vo2);
 	roomi->addFace(sueloroom);
 	roomi->addFace(paredfront);
 	roomi->addFace(paredback);

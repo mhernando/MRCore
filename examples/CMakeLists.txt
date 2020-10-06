@@ -3,17 +3,25 @@ cmake_minimum_required(VERSION 2.8)
 SET(EXAMPLE_BIN_DIR "${CMAKE_CURRENT_BINARY_DIR}/bin")
 #adds per target properties for examples
 macro(MR_GLUT_EXAMPLE exampletarget)
-SET(GLUT_FOUND 1)
-SET(GLUT_LIBRARIES glut32)
-SET(OPENGL_LIBRARIES opengl32 glu32 )
+
+
+
  IF(WIN32)
+	SET(GLUT_FOUND 1)
+	SET(GLUT_LIBRARIES glut32)
+	SET(OPENGL_LIBRARIES opengl32 glu32 )
 	IF(DEBUG)
 		TARGET_LINK_LIBRARIES(${exampletarget} mrcore_d  ${GLUT_LIBRARIES})
 	ELSE(DEBUG)
 		TARGET_LINK_LIBRARIES(${exampletarget} mrcore  ${GLUT_LIBRARIES})
 	ENDIF(DEBUG)
-ELSE(WIN32) #LINUX	
-		TARGET_LINK_LIBRARIES(${exampletarget} mrcore ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES} )
+ELSE(WIN32) #LINUX
+	find_package(OpenGL REQUIRED COMPONENTS OpenGL)
+        find_package(GLUT REQUIRED)
+	if(OPENGL_GLU_FOUND)
+ 		message("GLU:  FOUND !!!")
+	endif() 
+	TARGET_LINK_LIBRARIES(${exampletarget}  ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} mrcore)
 ENDIF(WIN32)
 set_target_properties( ${exampletarget} 
     PROPERTIES
