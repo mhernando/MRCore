@@ -1,4 +1,4 @@
-MR_SIMPLE_GLUT_EXAMPLE(worldtest)
+MR_SIMPLE_GLUT_EXAMPLE(worldTest)
 MR_SIMPLE_GLUT_EXAMPLE(mainMHGtests)
 MR_SIMPLE_GLUT_EXAMPLE(gluttestMHGtransformation)
 
