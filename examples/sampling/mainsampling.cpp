@@ -83,7 +83,8 @@ scene.BackgroundColor(0.9, 0.9, 1);
 scene.Draw();
 
 char mensaje[200];
-sprintf_s(mensaje,200,"Number of Samples: %d\n",sampleSet.size()/3);
+
+snprintf(mensaje,200,"Number of Samples: %d\n",sampleSet.size()/3);
 glColor3f(0,0,0);
 GLTools::Color(BLACK);
 glTranslated(15, 5, 14);
