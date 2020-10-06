@@ -3,8 +3,8 @@
 #include "gl/gltools.h"
 
 #include "base/logger.h"
-#include "../sim/world.h"
-#include "../sim/cylindricalpart.h"
+#include "../world.h"
+#include "../cylindricalpart.h"
 namespace mr
 {
 IMPLEMENT_MR_OBJECT(WheeledBaseSim)
@@ -112,12 +112,12 @@ void WheeledBaseSim::simulate(double delta_t)
 	move_success = false;
 	/*verificar si la posicion de destino es valida: se verifica
 	de manera simple lanzando unos rayos  abajo segun el eje Z desde los centros de las ruedas
-	para ello hay que discretizar la trayectoria en trozitos del tamaño de un radio como maximo
-	normalemnete el tiempo de simulación es mucho menor
-	Se obtiene entonces cuatro alturas. De estas se utilizan las tres más estables segun un modelo dinámico
-	sencillo. Además se verifica que el salto dado por las ruedas de apoyo no supera su diametro .
-	en cuyo caso se actualiza la posición y la pose. La pose se actualiza con el movimiento lineal,
-	mientras que la posición puede ser 3d (subir una rampa por ejemplo
+	para ello hay que discretizar la trayectoria en trozitos del tamaï¿½o de un radio como maximo
+	normalemnete el tiempo de simulaciï¿½n es mucho menor
+	Se obtiene entonces cuatro alturas. De estas se utilizan las tres mï¿½s estables segun un modelo dinï¿½mico
+	sencillo. Ademï¿½s se verifica que el salto dado por las ruedas de apoyo no supera su diametro .
+	en cuyo caso se actualiza la posiciï¿½n y la pose. La pose se actualiza con el movimiento lineal,
+	mientras que la posiciï¿½n puede ser 3d (subir una rampa por ejemplo
 	*/
 	Transformation3D position=getAbsoluteT3D();
 	Transformation3D delta(delta_x*cos(delta_th),delta_x*sin(delta_th),0,0,0,delta_th);
@@ -128,9 +128,9 @@ void WheeledBaseSim::simulate(double delta_t)
 	//el calculo de posicion de destino debera ir en una funcion para poder ser reusado
 	//base del planificador RRT:
 	if(computeGroundedLocation(newposition)==false)return;
-	//actualizamos la posición
+	//actualizamos la posiciï¿½n
 	setAbsoluteT3D(newposition);
-	//verifico que no hay colisión (aunque habría que desactivar la deteccion con las ruedas)
+	//verifico que no hay colisiï¿½n (aunque habrï¿½a que desactivar la deteccion con las ruedas)
 	World *world=getWorld();
 	if(world){
 		if(world->checkCollisionWith(*this)){
@@ -138,7 +138,7 @@ void WheeledBaseSim::simulate(double delta_t)
 			return ;
 		}
 	}
-	//esta es la posicion teórica simple de los encoders en caso de que el robot pueda moverse
+	//esta es la posicion teï¿½rica simple de los encoders en caso de que el robot pueda moverse
 	odometry.pose*=delta;
 	odometry.timeStamp();
 	//nueva version
@@ -161,7 +161,7 @@ bod.setHeight(height-clearance);
 bod.setRelativePosition(Vector3D(0,0,clearance));
 bod.setColor(1,0,0);
 
-//las ruedas no se pueden añadir hasta no tener un mecanismo de exclusión de detección
+//las ruedas no se pueden aï¿½adir hasta no tener un mecanismo de exclusiï¿½n de detecciï¿½n
 CylindricalPart wheel(wheel_width,wheel_radius);
 wheel.setColor(0.1,0.1,0.1);
 
@@ -209,8 +209,8 @@ bool WheeledBaseSim::move(double s, double rot)
 
 bool WheeledBaseSim::computeGroundedLocation(Transformation3D &p,World* w)
 {
-//partiendo de p, la modifica para que sea una posición geométricamente válida, suponiendo una
-//gravedad, pero sin consideraciones dinámicas
+//partiendo de p, la modifica para que sea una posiciï¿½n geomï¿½tricamente vï¿½lida, suponiendo una
+//gravedad, pero sin consideraciones dinï¿½micas
 
 	int i;
 	
@@ -246,10 +246,10 @@ bool WheeledBaseSim::computeGroundedLocation(Transformation3D &p,World* w)
 		for(i=1;i<4;i++)if(dw[ord[i]]<dw[ord[0]]){int c=ord[0];ord[0]=ord[i];ord[i]=c;}
 		for(i=2;i<4;i++)if(dw[ord[i]]<dw[ord[1]]){int c=ord[1];ord[1]=ord[i];ord[i]=c;}
 		if(dw[ord[3]]<dw[ord[2]]){int c=ord[2];ord[2]=ord[3];ord[3]=c;}
-		//calculo los punto de contacto teóricos cayendo en z:
+		//calculo los punto de contacto teï¿½ricos cayendo en z:
 		Vector3D contact[4];
 		for(i=0;i<4;i++)contact[i]=abswheels[i]+uz*dw[i];
-		//obtengo el vector del balancín con los dos más altos
+		//obtengo el vector del balancï¿½n con los dos mï¿½s altos
 		if(nc==4){
 			Vector3D axis=(contact[ord[0]]-contact[ord[1]]).getUnitaryVector();
 			Vector3D n=t.getVectorW();
@@ -263,10 +263,10 @@ bool WheeledBaseSim::computeGroundedLocation(Transformation3D &p,World* w)
 		bool flag[4]={false,false,false,false};
 		for(i=0;i<3;i++)flag[ord[i]]=true;
 		Vector3D vu,vv,vw,npos;
-		//nueva posición:
+		//nueva posiciï¿½n:
 		if(flag[0]&&flag[3])npos=(contact[0]+contact[3])*0.5;
 		if(flag[1]&&flag[2])npos=(contact[1]+contact[2])*0.5;
-		//nueva orientación:
+		//nueva orientaciï¿½n:
 		if(flag[0]&&flag[2])vu=(contact[0]-contact[2]).getUnitaryVector();
 		if(flag[1]&&flag[3])vu=(contact[1]-contact[3]).getUnitaryVector();
 		if(flag[0]&&flag[1])vv=(contact[0]-contact[1]).getUnitaryVector();
@@ -304,10 +304,10 @@ bool WheeledBaseSim::dropWheeledBase(Transformation3D &t, World *w)
 		for(i=1;i<4;i++)if(dw[ord[i]]<dw[ord[0]]){int c=ord[0];ord[0]=ord[i];ord[i]=c;}
 		for(i=2;i<4;i++)if(dw[ord[i]]<dw[ord[1]]){int c=ord[1];ord[1]=ord[i];ord[i]=c;}
 		if(dw[ord[3]]<dw[ord[2]]){int c=ord[2];ord[2]=ord[3];ord[3]=c;}
-		//calculo los punto de contacto teóricos cayendo en z:
+		//calculo los punto de contacto teï¿½ricos cayendo en z:
 		Vector3D contact[4];
 		for(i=0;i<4;i++)contact[i]=wheels[i]+uz*dw[i];
-		//obtengo el vector del balancín con los dos más altos
+		//obtengo el vector del balancï¿½n con los dos mï¿½s altos
 		if(nc==4){
 			Vector3D axis=(contact[ord[0]]-contact[ord[1]]).getUnitaryVector();
 			Vector3D n=t.getVectorW();
@@ -321,10 +321,10 @@ bool WheeledBaseSim::dropWheeledBase(Transformation3D &t, World *w)
 		bool flag[4]={false,false,false,false};
 		for(i=0;i<3;i++)flag[ord[i]]=true;
 		Vector3D vu,vv,vw,npos;
-		//nueva posición:
+		//nueva posiciï¿½n:
 		if(flag[0]&&flag[3])npos=(contact[0]+contact[3])*0.5;
 		if(flag[1]&&flag[2])npos=(contact[1]+contact[2])*0.5;
-		//nueva orientación:
+		//nueva orientaciï¿½n:
 		if(flag[0]&&flag[2])vu=(contact[0]-contact[2]).getUnitaryVector();
 		if(flag[1]&&flag[3])vu=(contact[1]-contact[3]).getUnitaryVector();
 		if(flag[0]&&flag[1])vv=(contact[0]-contact[1]).getUnitaryVector();
@@ -334,7 +334,7 @@ bool WheeledBaseSim::dropWheeledBase(Transformation3D &t, World *w)
 		drop.position=npos;
 		drop.orientation=OrientationMatrix(vu,vv);
 
-		if(Vector3D(0,0,1)*drop.getVectorW()<0.7)return false; //maximum admisible inclination (45º)
+		if(Vector3D(0,0,1)*drop.getVectorW()<0.7)return false; //maximum admisible inclination (45ï¿½)
 		t=drop;
 		setRelativeT3D(t);
 		return true;

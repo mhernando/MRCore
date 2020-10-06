@@ -1,7 +1,7 @@
-#include "WorldInfo.h"
+#include "worldinfo.h"
 #include "../world.h"
-#include "../sim/rovers/wheeledbasesim.h"
-#include "../sim/sensors/lasersensorsim.h"
+#include "../rovers/wheeledbasesim.h"
+#include "../sensors/lasersensorsim.h"
 
 namespace mr
 {
@@ -126,11 +126,11 @@ void WorldInfo::simulate(double delta_t)
 
 }
 //TIPICAL VALUES
-//-	Varianza longitudinal del láser sick detectando balizas reflectantes: 1.355x10-4 m^2
-//Varianza angular del láser sick detectando balizas reflectantes : 3.08x10 - 4 rad ^ 2
-//Varianza longitudinal del láser sick detectando objetos : 9.0x10 - 6 m ^ 2
-//Varianza en avance longitudinal de la odometría : 1.347x10 - 3 m ^ 2
-//Varianza en avance angular de la odometría : 3.68x10 - 4 rad ^ 2
+//-	Varianza longitudinal del lï¿½ser sick detectando balizas reflectantes: 1.355x10-4 m^2
+//Varianza angular del lï¿½ser sick detectando balizas reflectantes : 3.08x10 - 4 rad ^ 2
+//Varianza longitudinal del lï¿½ser sick detectando objetos : 9.0x10 - 6 m ^ 2
+//Varianza en avance longitudinal de la odometrï¿½a : 1.347x10 - 3 m ^ 2
+//Varianza en avance angular de la odometrï¿½a : 3.68x10 - 4 rad ^ 2
 #define PRIME_FACTOR(X, P) (1.5-((X)%(P))/(1.0*(P))) 
 void WorldInfo::updateWorld()
 {

@@ -32,7 +32,7 @@
 
 
 #include "lasersensor3dsim.h"
-#include "../gl/gltools.h"
+#include "../../gl/gltools.h"
 
 #include <math.h>
 

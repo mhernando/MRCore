@@ -1,5 +1,10 @@
 #include "powercube70hw.h"
 #include <iostream>
+#ifdef _WIN32
+#include <Windows.h>
+#else
+#include <unistd.h>
+#endif
 
 // Metodos de la clase PowerCube70
 namespace mr
@@ -41,7 +46,7 @@ int PowerCube70hw::init(const char device[])
 #ifdef WIN32
 	Sleep(4);
 #else
-	sleep(4);
+	usleep(4);
 #endif
 	std::cout<<"Homed..."<<std::endl;
 	SetSpeed(0.5,0.5);
@@ -170,7 +175,7 @@ int PowerCube70hw::Mov(unsigned int Axes,float Pos,unsigned int FinalPos)
 				
 				//pthread_mutex_trylock(&mutex);
 				//gettimeofday(&ahora,&tz); 
-				//cout<<n<<"Posicion Tilt: "<<PW.Tilt.Pos()<<"º	Pan: "<<PW.Pan.Pos()<<"º"<<endl;
+				//cout<<n<<"Posicion Tilt: "<<PW.Tilt.Pos()<<"ï¿½	Pan: "<<PW.Pan.Pos()<<"ï¿½"<<endl;
 				if(FinalPos)
 					{			
 						buffer[0]=Tilt.Pos();
@@ -213,7 +218,7 @@ int PowerCube70hw::Mov(unsigned int Axes,float Pos,unsigned int FinalPos)
 	Accel(60.0, 60.0);
 	Speed(10.0, 10.0);
 	Move(0,0);
-	//cout<<"Muñeca calibrada. Tilt=0, Pan=0"<<endl;
+	//cout<<"Muï¿½eca calibrada. Tilt=0, Pan=0"<<endl;
 }*/
 
 /*int PowerCube70hw::UpdatePos()

@@ -32,8 +32,8 @@
 
 
 #include "kinectsim.h"
-#include "../gl/gltools.h"
-#include "../sim/cylindricalpart.h"
+#include "../../gl/gltools.h"
+#include "../cylindricalpart.h"
 #include <math.h>
 #include <stdlib.h> 
 
@@ -85,7 +85,7 @@ setColor(1,1,0);
 PrismaticPart *bod=new PrismaticPart;
 
 //ojo el laserSensor tiene como referencia el centro del haz, luego al montarlo
-//mecánicamente hay que tener en cuenta la transformación
+//mecï¿½nicamente hay que tener en cuenta la transformaciï¿½n
 
 double body[9][2]=
 {{0.063,0.122},{-0.093,0.122},{-0.093,-0.063},{0.063,-0.063},

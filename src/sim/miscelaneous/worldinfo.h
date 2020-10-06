@@ -31,7 +31,7 @@
 
 #pragma once
 
-#include "../PositionableEntity.h"
+#include "../positionableentity.h"
 #include <vector>
 using namespace std;
 namespace mr

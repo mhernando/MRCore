@@ -1,7 +1,7 @@
 #include "lms100sim.h"
 #include <iostream>
 #include "gl/gltools.h"
-#include "../sim/cylindricalpart.h"
+#include "../cylindricalpart.h"
 
 namespace mr
 {
@@ -12,9 +12,9 @@ LMS100Sim::LMS100Sim()
 
 //constructor: create the physical representation of the laserscanner
 //ojo el laserSensor tiene como referencia el centro del haz, luego al montarlo
-//mecánicamente hay que tener en cuenta la transformación (la altura de la base al haz es 0.01157 m 
+//mecï¿½nicamente hay que tener en cuenta la transformaciï¿½n (la altura de la base al haz es 0.01157 m 
 
-//la resolución tomada es 0.5º  270º
+//la resoluciï¿½n tomada es 0.5ï¿½  270ï¿½
 CylindricalPart *body1=new CylindricalPart(0.095,0.05025);
 body1->setColor(0.3,0.3,1.0);
 body1->setRelativePosition(Vector3D(0,0,-0.1157));
@@ -33,7 +33,7 @@ body2->setColor(0.3,0.3,1.0);
 body2->setRelativePosition(Vector3D(0,0,-0.1157));  
 (*this)+=body2;
 
-//el cristal se pinta pero no se usa en la detección
+//el cristal se pinta pero no se usa en la detecciï¿½n
 CylindricalPart *glass=new CylindricalPart(0.100,0.045,10);
 glass->setColor(0.1,0.1,0.1);
 glass->setRelativePosition(Vector3D(0,0,-0.0635));

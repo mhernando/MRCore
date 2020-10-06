@@ -166,8 +166,8 @@ void XMLAux::GetValueOwnerAndTcp(XMLVariable* v, int* ownerAndTcp)
 
 		}
 
-		str>>(int)ownerAndTcp[0];
-		str1>>(int)ownerAndTcp[1];
+		str>>(ownerAndTcp[0]);
+		str1>>(ownerAndTcp[1]);
 		
 	}
 string XMLAux::GetNameLinkTo (XMLVariable* v)
@@ -267,7 +267,7 @@ int XMLAux::getIndTcp (string cad)
 	if (indDefault)
 		return 0;
 
-	str>>(int)ind;
+	str>>ind;
 	return ind;
 }
 

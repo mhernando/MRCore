@@ -3,8 +3,8 @@
 #include "gl/gltools.h"
 
 #include "base/logger.h"
-#include "../sim/world.h"
-#include "../sim/cylindricalpart.h"
+#include "../world.h"
+#include "../cylindricalpart.h"
 
 namespace mr
 {
@@ -88,7 +88,7 @@ void QuadrotorSim::simulate(double t)
 
 void QuadrotorSim::drawGL()
 {
-	//las ruedas no se pueden añadir hasta no tener un mecanismo de exclusión de detección
+	//las ruedas no se pueden aï¿½adir hasta no tener un mecanismo de exclusiï¿½n de detecciï¿½n
 	CylindricalPart ring(0.2,radius);
 	ring.setColor(0.5,0.5,1.0);
 

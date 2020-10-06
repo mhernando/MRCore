@@ -1,7 +1,7 @@
 #include "lms200sim.h"
 #include <iostream>
 #include "gl/gltools.h"
-#include "../sim/cylindricalpart.h"
+#include "../cylindricalpart.h"
 
 namespace mr
 {
@@ -16,7 +16,7 @@ LMS200Sim::LMS200Sim()
 PrismaticPart *bod=new PrismaticPart;
 
 //ojo el laserSensor tiene como referencia el centro del haz, luego al montarlo
-//mecánicamente hay que tener en cuenta la transformación
+//mecï¿½nicamente hay que tener en cuenta la transformaciï¿½n
 
 double body[9][2]=
 {{0.063,0.122},{-0.093,0.122},{-0.093,-0.063},{0.063,-0.063},
@@ -32,7 +32,7 @@ bod->setColor(0.3,0.3,1.0);
 //bod->setIntersectable(false);
 (*this)+=bod;
 
-//las ruedas no se pueden añadir hasta no tener un mecanismo de exclusión de detección
+//las ruedas no se pueden aï¿½adir hasta no tener un mecanismo de exclusiï¿½n de detecciï¿½n
 CylindricalPart *glass=new CylindricalPart(0.110,0.053,10);
 glass->setColor(0.1,0.1,0.1);
 glass->setRelativePosition(Vector3D(0,0,-0.055));

@@ -3,9 +3,9 @@
 #include "gl/gltools.h"
 
 #include "base/logger.h"
-#include "../sim/world.h"
-#include "../sim/cylindricalpart.h"
-#include "../sim/tcp.h"
+#include "../world.h"
+#include "../cylindricalpart.h"
+#include "../tcp.h"
 
 namespace mr
 {

@@ -1,5 +1,5 @@
 #include "ultrasonicsensor.h"
-#include "../sim/prismaticpart.h"
+#include "../prismaticpart.h"
 
 namespace mr
 {
@@ -13,7 +13,7 @@ namespace mr
 		measure = 3;
 		setSensorProperties(DEG2RAD*10, 3, 0.05, 0);
 		beamNeedToBeUpdated = true;
-		//el cristal se pinta pero no se usa en la detección
+		//el cristal se pinta pero no se usa en la detecciï¿½n
 		PrismaticPart *piezo = new PrismaticPart();
 		piezo->setColor(0.9, 0.9, 0.9);
 		piezo->setRegularPolygonBase(0.025, 6);
@@ -130,7 +130,7 @@ namespace mr
 		gaussianError = _gaussian_error;
 
 
-		//CONO con el eje de rotación en x una recta cada 5 º de latitud y cada 5ª de altitud son unos 15º de apertura
+		//CONO con el eje de rotaciï¿½n en x una recta cada 5 ï¿½ de latitud y cada 5ï¿½ de altitud son unos 15ï¿½ de apertura
 		vectorBeam.clear();
 		absoluteVectorBeam.clear();
 		vectorBeam.push_back(Vector3D(1, 0, 0));
@@ -182,7 +182,7 @@ namespace mr
 				Vector3D n;
 				if (list[j]->rayIntersection(pos, absoluteVectorBeam[i], dist, &n)) {
 					if ((dist < minRange) || (dist > maxRange))continue;
-					//de momento tomo el valor mínimo.. pero aquí se podría hacer más con ruido y tal
+					//de momento tomo el valor mï¿½nimo.. pero aquï¿½ se podrï¿½a hacer mï¿½s con ruido y tal
 					if (dist < measure) {
 						if (fabs(n*absoluteVectorBeam[i]) < 0.4)continue; //check if they are almost paralell
 						measure = dist;

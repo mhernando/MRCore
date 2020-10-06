@@ -1,7 +1,7 @@
 #include "pioneer3atsim.h"
 #include <iostream>
 #include "gl/gltools.h"
-#include "../sim/cylindricalpart.h"
+#include "../cylindricalpart.h"
 
 namespace mr
 {
@@ -41,7 +41,7 @@ bod->setRelativePosition(Vector3D(0,0,0.085));
 bod->setColor(1.0,0.1,0.1);
 (*this)+=bod;
 
-//las ruedas no se pueden añadir hasta no tener un mecanismo de exclusión de detección
+//las ruedas no se pueden aï¿½adir hasta no tener un mecanismo de exclusiï¿½n de detecciï¿½n
 CylindricalPart *wheel1=new CylindricalPart(wheel_width,wheel_radius);
 wheel1->setColor(0.1,0.1,0.1);
 wheel1->setRelativeOrientation(X_AXIS,-PI/2);
