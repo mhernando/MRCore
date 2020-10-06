@@ -35,7 +35,7 @@
 
 #include "hw/wheeledbase.h"
 #include "base/globject.h"
-#include "../sim/composedentity.h"
+#include "../composedentity.h"
 #include "../math/transformation2d.h"
 #include "../data/wbodometry.h"
 
