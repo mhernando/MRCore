@@ -5,6 +5,7 @@ set (MRCore_VERSION_MINOR 0)
  
 MESSAGE(STATUS "MRCORE: Checking time functions")
 IF(NOT WIN32)
+	include (CheckFunctionExists)
 	check_function_exists(gettimeofday HAVE_GETTIMEOFDAY)
 	check_function_exists(clock_gettime HAVE_CLOCK_GETTIME)
 	IF(HAVE_GETTIMEOFDAY)
