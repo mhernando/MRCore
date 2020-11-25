@@ -33,7 +33,7 @@
 
 namespace mr
 {
-
+string XMLAux::currentDir="";
 string XMLAux::string_ConvertBool (bool b)
 	{
 		string cad;

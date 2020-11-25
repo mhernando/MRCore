@@ -63,7 +63,12 @@ void MeshPart::writeToXML(XMLElement* parent)
 void MeshPart::readFromXML(XMLElement* parent)
 {
 	PrimitiveSolidEntity::readFromXML(parent);
-	mesh.readFromXML(parent);
+	if (parent->FindVariableZ("stl_file"))
+	{
+		std::string file = XMLAux::GetValueCadena(parent->FindVariableZ("stl_file"));
+		std::string full_file = XMLAux::currentDir + file;
+		if (!loadAsciiSTL(full_file))loadBinarySTL(full_file);
+	}else mesh.readFromXML(parent);
 	//actualizaciones
 	absoluteMesh=mesh;
 	setMeshNeedToBeUpdated();

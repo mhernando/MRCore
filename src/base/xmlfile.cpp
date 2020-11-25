@@ -37,8 +37,19 @@ namespace mr
 XMLfile::XMLfile (const char *file)
 {
 	xml = new XML(file);
+	for (int i = strlen(file); i > 0; i--){
+		if ((file[i] == '\\') || (file[i] == '/')){
+			char path[500];
+			for(int j=0;j<=i;j++)path[j]=file[j];
+			path[i+1]=0;
+			XMLAux::currentDir = path;
+			break;
+		}
+	}
+	
 	root = xml->GetRootElement();
 	
+
 	checkOverwrite=false;
 
 	if (root->GetChildrenNum())

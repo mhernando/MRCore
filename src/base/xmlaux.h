@@ -83,7 +83,7 @@ static int getIndTcp (string cad);
 static string setLinkToTcpDefault (string name_owner,int index_tcp,int id_owner);
 static string setLinkToTcp (string name_owner,string name_tcp,int index_tcp,int id_owner);
 static string getOnlyNameTcp(string name);
-
+static string currentDir;
 }; 
 
 
