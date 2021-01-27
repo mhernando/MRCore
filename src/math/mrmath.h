@@ -51,7 +51,7 @@ namespace mr{
 
 //Constants
 #define PI (M_PI)
-#define EPS (0.000001)
+#define EPS (0.0000001)
 
 template <class X> inline int sgn(X d) { return d<0?-1:1; }
 template<class X> inline X square(const X& x) { return x*x; }

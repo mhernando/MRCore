@@ -57,6 +57,8 @@ GLScene::GLScene()
 	w=800;
 	showGrid=false;
 	showFrame=true;
+	min_d = 0.1F;
+	max_d = 100.0F;; //frustrum min max
 	BackgroundColor(0.2f,0.2f,0.2f);
 }
 void GLScene::BackgroundColor(float  r, float  g, float  b)
@@ -121,7 +123,7 @@ void GLScene::init()
 	glEnable(GL_COLOR_MATERIAL);
 	
 	glMatrixMode(GL_PROJECTION);
-	gluPerspective( 40.0, ((GLdouble)w)/((GLdouble)h), 0.1, 150);
+	gluPerspective( 40.0, ((GLdouble)w)/((GLdouble)h), min_d, max_d);
 
 }
 void GLScene::Draw() 
@@ -134,7 +136,7 @@ void GLScene::Draw()
 	//Defines the perspective
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective( 40.0, ((GLdouble)w)/((GLdouble)h), 0.1, 150);
+	gluPerspective( 40.0, ((GLdouble)w)/((GLdouble)h), min_d, max_d);
 	
 	//Para definir el punto de vista
 	glMatrixMode(GL_MODELVIEW);	
@@ -251,6 +253,28 @@ void GLScene::setViewSize(int x, int y, int width, int height)
 	oy=y;
 	if(width>0)w=width;
 	if(height>0)h=height;
+}
+void GLScene::viewAll()
+{
+	for (unsigned int i = 0; i < object.size(); i++)
+	{
+		World* w=dynamic_cast<World*>(object[i]);
+		if (w) {
+			BoundingBox bb=w->getBoundingBox();
+			Vector3D a=bb.getMaxVertex();
+			Vector3D b = bb.getMinVertex();
+			Vector3D c = (a + b) * 0.5F;
+			double d = (a - b).module();
+			dist = d;
+			center_x = c.x;
+			center_y = c.y;
+			center_z = c.z;
+			min_d = d / 100.0F;
+			max_d = 5 * d;
+			//min_d, max_d
+		}
+
+	}
 }
 /*
 void GLScene::Draw(Vector3D p)

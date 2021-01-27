@@ -50,7 +50,7 @@ public:
 	void GetViewPoint(double& d, double& rot,double& elv){d=dist;rot=alfa;elv=beta;}
 	void SetViewPoint(float distance, float rotation, float elevation){dist=distance;alfa=rotation; beta=elevation;}
 	void SetViewCenter(float x,float y,float z){center_x=x;center_y=y;center_z=z;}
-
+	void viewAll();
 	void BackgroundColor(float r, float  g, float  b);
 protected:
 	vector<GLObject*>  object;
@@ -69,5 +69,6 @@ protected:
 	bool rightButton;
 	bool midButton;
 	int ox,oy,w,h; //for painting area
+	float min_d, max_d; //frustrum min max
 };
 }; //namespace mr
