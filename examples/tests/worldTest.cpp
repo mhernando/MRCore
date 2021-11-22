@@ -4,7 +4,7 @@
 
 #include "mrcore.h"
 
-#include "GL/glut.h"
+#include "freeglut.h"
 
 #include <iostream>
 

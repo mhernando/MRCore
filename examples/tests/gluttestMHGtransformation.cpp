@@ -9,7 +9,7 @@
 #include "core/math/vector3d.h"
 #include "core/math/orientationmatrix.h"
 #include "core/math/transformation3d.h"*/
-#include <GL/glut.h>
+#include <freeglut.h>
 #include <iostream>
 
 #define _USE_MATH_DEFINES
